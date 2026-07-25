@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import CategoryFilter from "@/components/CategoryFilter";
 import ProductGrid from "@/components/ProductGrid";
@@ -54,6 +55,19 @@ export default async function CategoryPage({ params }: Params) {
           emptyMessage="This shelf is empty just now."
         />
       </div>
+
+      {/* The same shelf on the other axis. */}
+      {reduced > 0 && (
+        <p className="mt-12 text-small text-ink-muted">
+          <Link
+            href={`/sale/${category}`}
+            className="rounded-sm font-medium text-accent transition-opacity hover:opacity-80"
+          >
+            Just the {reduced} reduced {name.toLowerCase()}
+          </Link>{" "}
+          if you are shopping on price.
+        </p>
+      )}
     </div>
   );
 }
