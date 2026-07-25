@@ -9,6 +9,7 @@
     "lint": "eslint",
     "check:data": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-data.ts",
     "check:art": "node scripts/measure-art.mjs",
+    "images:prepare": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/prepare-images.ts",
     "art": "node scripts/product-art.mjs"
   },
   "dependencies": {

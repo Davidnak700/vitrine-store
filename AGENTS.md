@@ -125,13 +125,15 @@ components/
   CartButton.tsx  CartDrawer.tsx  SearchBar.tsx
 lib/
   products.ts  categories.ts  cart.ts  compare.ts  format.ts
-public/img/                   — generated product art, by category
+public/img/                   — product images as served, by category
+assets/photos/                — untouched photograph originals, by category
 scripts/
-  product-art.mjs             — draws all 36 product illustrations
-  measure-art.mjs             — measures them (npm run check:art)
+  prepare-images.ts           — crops originals to 4:3 (npm run images:prepare)
   check-data.ts               — validates the catalogue (npm run check:data)
+  product-art.mjs             — illustration fallback (npm run art)
+  measure-art.mjs             — measures illustrations (npm run check:art)
 docs/
-  image-spec.md               — the illustration system and its house rules
+  image-spec.md               — imagery decisions, and what has been ruled out
 ```
 
 ## React rules
@@ -182,18 +184,24 @@ Deals and About sit here because they were dropped from the header.
 - All copy must be original. Don't copy descriptions from real stores.
 - Product and brand names are invented. Do not use real trademarks
   or their product photography.
-- **All product imagery is generated SVG. There are no third-party image
-  assets in this project** — nothing to licence, nothing to attribute, no
-  trademark to avoid. Do not add stock photography.
-- Illustrations are drawn by `scripts/product-art.mjs`, which writes
-  `public/img/<category>/<slug>.svg`. Never hand-edit a generated file;
-  change the generator and re-run it.
-- `docs/image-spec.md` describes the illustration system: the house rules,
-  the silhouette-variation requirement, and how to check the result.
-- `imageCredit` is `null` on every product and stays that way. The field
-  is kept because it costs nothing and records that the decision was
-  deliberate.
-- Products whose art is not yet drawn point at `/img/placeholder.svg`.
+- Product imagery is **photography**, from Unsplash and Pexels under their
+  free licences. Verify the licence on the photo page — Unsplash+ is a paid
+  tier and is not usable. Record photographer, source and page URL in the
+  product's `imageCredit`.
+- Visible brand marks in photographs are fine. Requiring logo-free shots was
+  tried and cost eighteen rejections for one usable image.
+- Originals go in `assets/photos/<category>/` untouched;
+  `npm run images:prepare` crops them tight to 4:3 into
+  `public/img/<category>/`.
+- **Read `docs/image-spec.md` before changing anything about imagery.** It
+  records what has already been tried and measured — in particular that
+  unifying the photo backgrounds in code cannot work, and why.
+- If a photograph shows something other than the product as written, change
+  the product. The products are invented; the photograph is not.
+- A generated-SVG illustration system is kept as a documented fallback
+  (`scripts/product-art.mjs`, `npm run art`). It is not referenced by
+  `lib/products.ts`.
+- Products without their own image point at `/img/placeholder.svg`.
 
 ## Visual direction
 

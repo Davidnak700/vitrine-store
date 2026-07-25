@@ -11,10 +11,10 @@ import type { Category } from "@/lib/categories";
  * Within a category every product carries the same set of spec labels, in the
  * same order, so the comparison table lines up row by row.
  *
- * Product imagery is generated, not sourced: every illustration is drawn by
- * scripts/product-art.mjs (see docs/image-spec.md). There are no third-party
- * assets, so `imageCredit` is null everywhere and stays that way. Categories
- * whose art has not been drawn yet still point at the shared placeholder.
+ * Product imagery: photographs where we have them, otherwise the shared
+ * placeholder. A photograph carries an `imageCredit`; the generated SVG
+ * illustrations (kept as a fallback, see docs/image-spec.md) carry none.
+ * Only audio is photographed so far.
  */
 
 export type ImageCredit = {
@@ -347,8 +347,12 @@ export const products: Product[] = [
     price: 249,
     addedAt: "2026-04-16",
     bestseller: true,
-    image: "/img/audio/halden-field-one.svg",
-    imageCredit: null,
+    image: "/img/audio/halden-field-one.jpg",
+    imageCredit: {
+      photographer: "Paul Seling",
+      source: "Pexels",
+      url: "https://www.pexels.com/photo/black-corded-headphones-12266869/",
+    },
     shortDescription: "Comfortable for a whole working day, which matters more than it sounds.",
     description:
       "Most headphones are judged on the first ten minutes. The Field One is built for hour six: light clamp, breathable pads, and no hot spot on the top of your head. The sound is even and unexaggerated, so voices and music both come out right.",
@@ -371,8 +375,12 @@ export const products: Product[] = [
     oldPrice: 429,
     addedAt: "2025-11-28",
     bestseller: true,
-    image: "/img/audio/nordvale-hush-pro.svg",
-    imageCredit: null,
+    image: "/img/audio/nordvale-hush-pro.jpg",
+    imageCredit: {
+      photographer: "Kedibone Isaac Makhumisane",
+      source: "Unsplash",
+      url: "https://unsplash.com/photos/a-pair-of-headphones-sitting-on-top-of-a-table-BprwjNPX2Vk",
+    },
     shortDescription: "Turns a train carriage into a quiet room.",
     description:
       "The noise cancelling is the reason to buy these, and it is genuinely a class above the rest of the shelf on steady sounds: engines, air conditioning, road noise. Voices still get through, which is deliberate. If you fly or commute often, this is the pair.",
@@ -394,8 +402,12 @@ export const products: Product[] = [
     price: 129,
     addedAt: "2026-06-11",
     bestseller: false,
-    image: "/img/audio/kestrel-bud-2.svg",
-    imageCredit: null,
+    image: "/img/audio/kestrel-bud-2.jpg",
+    imageCredit: {
+      photographer: "TheRegisti",
+      source: "Unsplash",
+      url: "https://unsplash.com/photos/black-and-blue-bluetooth-earbuds-qt9_OfTaaeY",
+    },
     shortDescription: "Small, sealed earbuds that stay put when you run.",
     description:
       "Four sizes of tip in the box, because the fit is the whole product with earbuds. Get it right and they seal, stay in and sound full. The case gives you three extra charges, so a week of commuting between wall sockets is normal.",
@@ -417,18 +429,22 @@ export const products: Product[] = [
     price: 159,
     addedAt: "2026-07-02",
     bestseller: false,
-    image: "/img/audio/orla-loop.svg",
-    imageCredit: null,
-    shortDescription: "Sits outside the ear, so you still hear the road.",
+    image: "/img/audio/orla-loop.jpg",
+    imageCredit: {
+      photographer: "wu yi",
+      source: "Unsplash",
+      url: "https://unsplash.com/photos/black-and-silver-bluetooth-earphones-Kmz5Is6-PgQ",
+    },
+    shortDescription: "Hooks over the ear and stays there. Nothing to charge, ever.",
     description:
-      "Nothing goes into your ear canal: the Loop hooks over the top and rests just in front. That means you hear traffic, announcements and people talking to you, which is the point. Bass is lighter than a sealed bud, and that is the trade you are making.",
+      "A wire is not a compromise here, it is the point: no battery, no pairing, no flat pair of earphones at the worst moment. The hooks sit over the top of your ear rather than wedging into the canal, so you can wear them for hours and still hear a car coming. Bass is lighter than a sealed bud, and that is the trade you are making.",
     specs: [
-      { label: "Type", value: "Open-ear, hooked" },
-      { label: "Connection", value: "Bluetooth" },
-      { label: "Battery life", value: "10 hours" },
-      { label: "Charging", value: "USB-C, 90 minutes to full" },
-      { label: "Controls", value: "Physical button per side" },
-      { label: "Weight", value: "9 g per bud" },
+      { label: "Type", value: "Over-ear clips, wired" },
+      { label: "Connection", value: "3.5 mm cable, 1.2 m" },
+      { label: "Battery life", value: "Not applicable, wired" },
+      { label: "Charging", value: "Not applicable" },
+      { label: "Controls", value: "In-line remote on the cable" },
+      { label: "Weight", value: "22 g the pair" },
     ],
     inStock: true,
   },
@@ -441,8 +457,12 @@ export const products: Product[] = [
     oldPrice: 129,
     addedAt: "2026-02-24",
     bestseller: false,
-    image: "/img/audio/cairn-tumble.svg",
-    imageCredit: null,
+    image: "/img/audio/cairn-tumble.jpg",
+    imageCredit: {
+      photographer: "Caleb Oquendo",
+      source: "Pexels",
+      url: "https://www.pexels.com/photo/speaker-in-white-background-7772558/",
+    },
     shortDescription: "A speaker you can leave outside and stop worrying about.",
     description:
       "Sealed against rain and dust, and it survives being knocked off a table, which is how most portable speakers die. It is loud enough for a kitchen or a small garden and honest about not being loud enough for a party.",
@@ -464,8 +484,12 @@ export const products: Product[] = [
     price: 299,
     addedAt: "2025-09-12",
     bestseller: false,
-    image: "/img/audio/vellum-shelf.svg",
-    imageCredit: null,
+    image: "/img/audio/vellum-shelf.jpg",
+    imageCredit: {
+      photographer: "Rosen Genov",
+      source: "Pexels",
+      url: "https://www.pexels.com/photo/a-presonus-speaker-system-4295360/",
+    },
     shortDescription: "A proper pair of speakers for a desk, not a single box pretending.",
     description:
       "Two speakers a metre apart give you a stereo image that no single unit can fake — instruments sit in different places instead of piling into the middle. They plug into the mains and stay where you put them. For a desk or a small sitting room, this is the upgrade that people actually hear.",

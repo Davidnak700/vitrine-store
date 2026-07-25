@@ -75,18 +75,28 @@ check("prices are positive integers", products.every((p) => Number.isInteger(p.p
 
 // ------------------------------------------------------------------ imagery
 check(
-  "no product carries an imageCredit — all art is generated",
-  products.every((p) => p.imageCredit === null),
-);
-check(
-  "drawn art paths match category and slug",
+  "image paths match their own category and slug",
   products.every(
-    (p) => p.image === PLACEHOLDER_IMAGE || p.image === `/img/${p.category}/${p.slug}.svg`,
+    (p) =>
+      p.image === PLACEHOLDER_IMAGE ||
+      p.image === `/img/${p.category}/${p.slug}.jpg` ||
+      p.image === `/img/${p.category}/${p.slug}.svg`,
   ),
 );
 check(
-  "no raster assets referenced",
-  products.every((p) => !/\.(jpe?g|png|webp|avif|gif)$/i.test(p.image)),
+  "every photograph carries a full credit",
+  products.every(
+    (p) =>
+      !p.image.endsWith(".jpg") ||
+      (p.imageCredit !== null &&
+        !!p.imageCredit.photographer &&
+        !!p.imageCredit.url &&
+        (p.imageCredit.source === "Unsplash" || p.imageCredit.source === "Pexels")),
+  ),
+);
+check(
+  "nothing but a photograph claims a credit",
+  products.every((p) => p.image.endsWith(".jpg") || p.imageCredit === null),
 );
 
 // ------------------------------------------------------- home page, 3 rows

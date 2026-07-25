@@ -28,9 +28,10 @@ export default function ProductCard({ product }: { product: Product }) {
             width={400}
             height={300}
             className="h-auto w-full"
-            // Vectors have nothing to optimise, and Next's optimiser declines
-            // SVG by default.
-            unoptimized
+            sizes="(min-width: 1280px) 260px, (min-width: 640px) 45vw, 90vw"
+            // Photographs go through the optimiser. The placeholder is an SVG,
+            // which has nothing to optimise and which Next declines by default.
+            unoptimized={product.image.endsWith(".svg")}
           />
           {onSale && (
             <span className="absolute left-3 top-3 rounded-pill bg-accent-tint px-3 py-1 text-label font-semibold uppercase text-accent">
