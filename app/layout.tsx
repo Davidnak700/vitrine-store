@@ -43,9 +43,19 @@ export default function RootLayout({
             shell below is rendered on the server and handed to it as children
             already finished. The directive stays at the leaves. */}
         <CartProvider>
+          {/* First thing in the tab order: a keyboard user should not have to
+              walk the whole header on every page. */}
+          <a
+            href="#main"
+            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-pill focus:bg-ink focus:px-5 focus:py-3 focus:text-small focus:font-medium focus:text-surface-card"
+          >
+            Skip to content
+          </a>
           <PromoBar />
           <Header />
-          <main className="flex-1">{children}</main>
+          <main id="main" className="flex-1">
+            {children}
+          </main>
           <Footer />
           <CartDrawer />
         </CartProvider>

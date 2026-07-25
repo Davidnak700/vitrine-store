@@ -24,10 +24,19 @@ export type CompareContext = {
 export default function ProductCard({
   product,
   compare,
+  headingLevel = 3,
 }: {
   product: Product;
   compare?: CompareContext;
+  /**
+   * 3 under a section heading, as on the home page rows and the full
+   * catalogue; 2 where the grid is the page's own content and there is no h2
+   * above it. Hard-coding h3 skipped a level on the category, deals and
+   * search pages.
+   */
+  headingLevel?: 2 | 3;
 }) {
+  const Heading = headingLevel === 2 ? "h2" : "h3";
   const onSale = product.oldPrice !== undefined;
   const isSelected = compare?.selected.includes(product.slug) ?? false;
   const href = compare
@@ -64,9 +73,9 @@ export default function ProductCard({
           )}
         </div>
 
-        <h3 className="mt-4 text-body font-medium text-ink transition-colors group-hover:text-accent">
+        <Heading className="mt-4 text-body font-medium text-ink transition-colors group-hover:text-accent">
           {product.name}
-        </h3>
+        </Heading>
         <p className="mt-1 text-small text-ink-muted">{product.brand}</p>
         <p className="mt-2 text-small text-ink-muted">
           {product.shortDescription}

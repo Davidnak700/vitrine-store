@@ -78,6 +78,7 @@ export default async function CategoryPage({ params, searchParams }: Params) {
           products={products}
           emptyMessage="This shelf is empty just now."
           compare={{ basePath, selected }}
+          headingLevel={2}
         />
       </div>
 

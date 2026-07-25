@@ -53,6 +53,7 @@ export default async function SaleCategoryPage({ params }: Params) {
         <ProductGrid
           products={deals}
           emptyMessage={`Nothing in ${name.toLowerCase()} is reduced at the moment.`}
+          headingLevel={2}
         />
       </div>
 

@@ -41,6 +41,7 @@ export default function SalePage() {
         <ProductGrid
           products={deals}
           emptyMessage="Nothing is reduced at the moment."
+          headingLevel={2}
         />
       </div>
 

@@ -48,7 +48,7 @@ export default async function SearchPage({ searchParams }: Search) {
 
       {searched && results.length > 0 && (
         <div className="mt-8">
-          <ProductGrid products={results} />
+          <ProductGrid products={results} headingLevel={2} />
         </div>
       )}
 
