@@ -12,6 +12,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
+    // scripts/check-data.ts runs under plain `node`, whose ESM resolver needs
+    // fully specified paths. Safe with noEmit: nothing is compiled out.
+    "allowImportingTsExtensions": true,
     "incremental": true,
     "plugins": [
       {

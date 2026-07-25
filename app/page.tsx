@@ -1,14 +1,7 @@
 import Link from "next/link";
+import ProductGrid from "@/components/ProductGrid";
 import { categories } from "@/lib/categories";
-
-/**
- * Home page — stage 1.
- *
- * Hero, category tiles and the trust block are finished. The two product rows
- * (bestsellers, new arrivals) are shown as empty wells: there is no product
- * data until stage 2 and no ProductGrid until stage 3. Both rows are replaced
- * by the real <ProductGrid /> then, and PlaceholderRow is deleted.
- */
+import { getBestsellers, getDeals, getNewArrivals } from "@/lib/products";
 
 const trust = [
   {
@@ -25,21 +18,20 @@ const trust = [
   },
 ];
 
-function PlaceholderRow() {
-  return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {[0, 1, 2, 3].map((slot) => (
-        <div
-          key={slot}
-          className="rounded-xl bg-surface-well"
-          style={{ aspectRatio: "4 / 5" }}
-        />
-      ))}
-    </div>
-  );
-}
-
 export default function Home() {
+  // The three rows are composed in order, each excluding what the previous
+  // ones took. A product can be both a bestseller and reduced, so without the
+  // running exclusion the rows would overlap.
+  const used = new Set<string>();
+
+  const bestsellers = getBestsellers({ limit: 4, exclude: used });
+  bestsellers.forEach((product) => used.add(product.slug));
+
+  const deals = getDeals({ limit: 4, exclude: used });
+  deals.forEach((product) => used.add(product.slug));
+
+  const arrivals = getNewArrivals({ limit: 4, exclude: used });
+
   return (
     <>
       {/* Hero */}
@@ -73,7 +65,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Bestsellers — real products arrive in stage 3 */}
+      {/* Bestsellers */}
       <section className="mx-auto max-w-page px-6 py-12 md:py-24">
         <div className="flex flex-wrap items-baseline justify-between gap-4">
           <h2 className="font-display text-h2 font-medium text-ink">
@@ -87,7 +79,7 @@ export default function Home() {
           </Link>
         </div>
         <div className="mt-8">
-          <PlaceholderRow />
+          <ProductGrid products={bestsellers} />
         </div>
       </section>
 
@@ -117,8 +109,7 @@ export default function Home() {
         </ul>
       </section>
 
-      {/* Deals — the second navigation axis, since Deals is not in the header.
-          Real products arrive in stage 3, the /sale routes in stage 5. */}
+      {/* Deals — the second navigation axis, since Deals is not in the header */}
       <section className="mx-auto max-w-page px-6 py-12 md:py-24">
         <div className="flex flex-wrap items-baseline justify-between gap-4">
           <h2 className="font-display text-h2 font-medium text-ink">
@@ -132,17 +123,17 @@ export default function Home() {
           </Link>
         </div>
         <div className="mt-8">
-          <PlaceholderRow />
+          <ProductGrid products={deals} />
         </div>
       </section>
 
-      {/* New arrivals — real products arrive in stage 3 */}
+      {/* New arrivals */}
       <section className="mx-auto max-w-page px-6 py-12 md:py-24">
         <h2 className="font-display text-h2 font-medium text-ink">
           Just landed
         </h2>
         <div className="mt-8">
-          <PlaceholderRow />
+          <ProductGrid products={arrivals} />
         </div>
       </section>
 
