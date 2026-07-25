@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import PriceTag from "@/components/PriceTag";
 import SpecTable from "@/components/SpecTable";
 import { getCategory } from "@/lib/categories";
+import { compareHref } from "@/lib/compare";
 import { formatSaving } from "@/lib/format";
 import { getProduct, products } from "@/lib/products";
 
@@ -93,6 +94,15 @@ export default async function ProductPage({ params }: Params) {
               </p>
             )}
           </div>
+
+          <p className="mt-4">
+            <Link
+              href={compareHref([product.slug])}
+              className="rounded-sm text-small font-medium text-accent transition-opacity hover:opacity-80"
+            >
+              Compare with other {category.name.toLowerCase()}
+            </Link>
+          </p>
 
           <p className="mt-10 text-body text-ink-muted">{product.description}</p>
         </div>

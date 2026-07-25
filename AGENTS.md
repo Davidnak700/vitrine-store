@@ -40,6 +40,22 @@ and blue tag is a registered trademark.
 - Product data lives in a static file in the repo.
 - Do not add new dependencies without discussing it with me first.
 
+## Editing files
+
+**Never write JSON or config files through PowerShell `Set-Content` or
+`Out-File`.** In Windows PowerShell 5.1 both emit a UTF-8 BOM, and a BOM makes
+`package.json` unparseable to the Next.js toolchain — the build fails with
+"expected value at line 1 column 1". This has broken the build twice.
+
+Use the Edit tool, or if a script must do it:
+
+```
+[System.IO.File]::WriteAllText($path, $text, (New-Object System.Text.UTF8Encoding($false)))
+```
+
+The `$false` is what suppresses the BOM. The same applies to any file another
+tool parses — lockfiles, tsconfig, CSS.
+
 ## Navigation: two axes
 
 Top nav is the six categories directly, with Search and Cart on the right:
@@ -149,8 +165,18 @@ docs/
 - Format prices in one place (`lib/format.ts`), never inline in components.
   Locale `en-GB`, currency `GBP`. Prices are stored as plain numbers; the
   currency exists only in the formatter.
-- Cart and compare list: React Context + localStorage. Remember that
-  localStorage is unavailable during server rendering — don't crash on it.
+- Compare selection lives in the URL: `/compare?items=slug-a,slug-b`. No
+  context, no storage, no client component — a comparison is shareable and
+  the back button works. The consequence, accepted deliberately: there is no
+  site-wide bar that accumulates while you browse, because other pages do not
+  carry the selection. Products are added from the compare page itself.
+- Cart: React Context + localStorage. This one genuinely needs `"use client"` —
+  a basket has to survive navigation, and the URL is the wrong place for it.
+  Remember that localStorage is unavailable during server rendering, so don't
+  crash on it.
+- Server components are the default, not a score to protect. Where real
+  interactivity or persistence is needed, reach for `"use client"` rather than
+  contorting the design to avoid it.
 - Never call `Date.now()` in a client component (hydration mismatch).
 
 ## Home page

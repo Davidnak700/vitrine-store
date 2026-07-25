@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import CategoryFilter from "@/components/CategoryFilter";
 import ProductGrid from "@/components/ProductGrid";
 import { categories, getCategory, isCategory } from "@/lib/categories";
+import { compareHref } from "@/lib/compare";
 import { getDealsByCategory, getProductsByCategory } from "@/lib/products";
 
 type Params = { params: Promise<{ category: string }> };
@@ -48,6 +49,15 @@ export default async function CategoryPage({ params }: Params) {
       <div className="mt-10">
         <CategoryFilter basePath="/catalog" current={category} />
       </div>
+
+      <p className="mt-6">
+        <Link
+          href={compareHref([], category)}
+          className="rounded-sm text-small font-medium text-accent transition-opacity hover:opacity-80"
+        >
+          Compare {name.toLowerCase()} side by side
+        </Link>
+      </p>
 
       <div className="mt-12">
         <ProductGrid
