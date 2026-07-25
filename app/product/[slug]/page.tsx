@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import AddToCart from "@/components/AddToCart";
 import PriceTag from "@/components/PriceTag";
 import SpecTable from "@/components/SpecTable";
 import { getCategory } from "@/lib/categories";
@@ -80,14 +81,9 @@ export default async function ProductPage({ params }: Params) {
 
           <div className="mt-8">
             {product.inStock ? (
-              // Stage 7 gives this an onClick and a cart. Until then it is
-              // deliberately inert, which keeps this a server component.
-              <button
-                type="button"
-                className="rounded-pill bg-ink px-6 py-3 text-body font-medium text-surface-card transition-opacity hover:opacity-90"
-              >
-                Add to basket
-              </button>
+              // The only client component on this page. The page itself stays
+              // a server component.
+              <AddToCart slug={product.slug} name={product.name} />
             ) : (
               <p className="rounded-pill bg-surface-well px-6 py-3 text-body text-ink-muted inline-block">
                 Out of stock — back soon

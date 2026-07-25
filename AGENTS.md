@@ -179,8 +179,18 @@ docs/
     instead of at build time. That is the price of having no client state.
 - Cart: React Context + localStorage. This one genuinely needs `"use client"` —
   a basket has to survive navigation, and the URL is the wrong place for it.
-  Remember that localStorage is unavailable during server rendering, so don't
-  crash on it.
+  - localStorage is read through `useSyncExternalStore`, not copied into
+    state inside an effect. Its server snapshot is an empty basket, which is
+    exactly what the server renders, so the first paint cannot mismatch or
+    show a stale basket. It also syncs across tabs for free.
+  - A saved basket stores only slug and quantity. Names and prices are looked
+    up from the catalogue when it is rendered, so an old basket cannot show an
+    old price.
+  - `readCart` sanitises: bad shapes, quantities out of range, and slugs no
+    longer in the catalogue are all dropped at the point of reading, so the
+    badge count and the drawer contents can never disagree.
+  - The four client components are `CartProvider`, `CartButton`, `CartDrawer`
+    and `AddToCart`. Nothing else in the project carries the directive.
 - Server components are the default, not a score to protect. Where real
   interactivity or persistence is needed, reach for `"use client"` rather than
   contorting the design to avoid it.

@@ -4,6 +4,8 @@ import "./globals.css";
 import PromoBar from "@/components/PromoBar";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CartProvider from "@/components/CartProvider";
+import CartDrawer from "@/components/CartDrawer";
 
 /**
  * Both families are variable fonts, so no `weight` list is needed: the whole
@@ -37,10 +39,16 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${instrumentSans.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        <PromoBar />
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        {/* CartProvider is a client component, but this layout is not: the
+            shell below is rendered on the server and handed to it as children
+            already finished. The directive stays at the leaves. */}
+        <CartProvider>
+          <PromoBar />
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );
