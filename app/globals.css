@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens — "Vitrine"
+
+   This block is the single source of truth for the look of the site.
+   No component may hard-code a colour, radius, shadow or type size.
+   Tailwind v4 is configured here in CSS; there is no tailwind.config.js.
+   --------------------------------------------------------------------------- */
+
+:root {
+  /* Surfaces */
+  --surface-page: #f6f7f9;
+  --surface-card: #ffffff;
+  --surface-well: #e7e9ed;
+
+  /* Text */
+  --ink: #1d2026;
+  --ink-muted: #5a5e69;
+
+  /* Accent — the only accent colour in the project */
+  --accent: #5b5bd6;
+
+  /* A 10% tint of the accent, for badges. Derived, not a sixth colour. */
+  --accent-tint: rgba(91, 91, 214, 0.1);
+
+  /* Keyboard focus */
+  --focus-ring: 2px solid var(--accent);
+  --focus-ring-offset: 3px;
+}
+
+/* Map the tokens above onto Tailwind's naming so utilities exist:
+   bg-surface-card, text-ink-muted, text-accent, font-display …
+   `inline` is required because these values reference other variables. */
+@theme inline {
+  --color-surface-page: var(--surface-page);
+  --color-surface-card: var(--surface-card);
+  --color-surface-well: var(--surface-well);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-accent: var(--accent);
+  --color-accent-tint: var(--accent-tint);
+
+  /* The two variables come from next/font in app/layout.tsx */
+  --font-display: var(--font-space-grotesk);
+  --font-sans: var(--font-instrument-sans);
+}
+
+@theme {
+  /* Radii. These names are Tailwind's own, so rounded-lg is exactly
+     --radius-lg and the two can never drift apart. */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+  /* Shadows, tinted with the ink colour, never pure black */
+  --shadow-sm: 0 1px 3px rgba(29, 32, 38, 0.06);
+  --shadow-md:
+    0 2px 4px rgba(29, 32, 38, 0.04), 0 4px 12px rgba(29, 32, 38, 0.06);
+  --shadow-lg:
+    0 4px 8px rgba(29, 32, 38, 0.04), 0 12px 32px rgba(29, 32, 38, 0.08);
+
+  /* Layout — gives the max-w-page utility */
+  --container-page: 1120px;
+
+  /* Type scale. The heading ladder is fluid so the steps stay
+     distinguishable at every width: 48/32/24 desktop, 32/24/20 mobile. */
+  --text-display: clamp(40px, 7vw, 72px);
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.02em;
+
+  --text-h1: clamp(32px, 5vw, 48px);
+  --text-h1--line-height: 1.1;
+  --text-h1--letter-spacing: -0.01em;
+
+  --text-h2: clamp(24px, 3.5vw, 32px);
+  --text-h2--line-height: 1.2;
+
+  --text-h3: clamp(20px, 2.5vw, 24px);
+  --text-h3--line-height: 1.3;
+
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 1.6;
+
+  --text-body: 16px;
+  --text-body--line-height: 1.6;
+
+  --text-small: 14px;
+  --text-small--line-height: 1.5;
+
+  --text-label: 13px;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.08em;
+
+  /* Motion: 150ms for colour and hover. Anything that moves or resizes
+     opts up to 200ms with duration-200 at the call site. */
+  --default-transition-duration: 150ms;
+  --default-transition-timing-function: ease-out;
+}
+
+body {
+  background-color: var(--surface-page);
+  color: var(--ink);
+  font-family: var(--font-instrument-sans), system-ui, sans-serif;
+}
+
+/* Keyboard focus. Permanent exception to the no-borders rule: it is
+   never removed, dimmed or replaced for visual reasons.
+   :focus-visible rather than :focus, so the ring appears when tabbing
+   but not when clicking with a mouse. */
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
