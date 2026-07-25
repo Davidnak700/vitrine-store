@@ -2,12 +2,21 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import CategoryFilter from "@/components/CategoryFilter";
+import CompareBar from "@/components/CompareBar";
 import ProductGrid from "@/components/ProductGrid";
 import { categories, getCategory, isCategory } from "@/lib/categories";
-import { compareHref } from "@/lib/compare";
+import {
+  COMPARE_PARAM,
+  compareHref,
+  parseForCategory,
+  toggleHref,
+} from "@/lib/compare";
 import { getDealsByCategory, getProductsByCategory } from "@/lib/products";
 
-type Params = { params: Promise<{ category: string }> };
+type Params = {
+  params: Promise<{ category: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
 
 /**
  * `params` is a promise in this version of Next and has to be awaited — it was
@@ -28,7 +37,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   };
 }
 
-export default async function CategoryPage({ params }: Params) {
+export default async function CategoryPage({ params, searchParams }: Params) {
   const { category } = await params;
 
   // An unknown segment is a 404, not an empty grid.
@@ -37,6 +46,13 @@ export default async function CategoryPage({ params }: Params) {
   const { name } = getCategory(category);
   const products = getProductsByCategory(category);
   const reduced = getDealsByCategory(category).length;
+
+  // The comparison being built, held in this page's own address. Reading a
+  // search param makes the route render on demand rather than at build time —
+  // the trade for having no client state.
+  const basePath = `/catalog/${category}`;
+  const selection = parseForCategory((await searchParams)[COMPARE_PARAM], category);
+  const selected = selection.products.map((p) => p.slug);
 
   return (
     <div className="mx-auto max-w-page px-6 py-12 md:py-24">
@@ -50,21 +66,31 @@ export default async function CategoryPage({ params }: Params) {
         <CategoryFilter basePath="/catalog" current={category} />
       </div>
 
-      <p className="mt-6">
-        <Link
-          href={compareHref([], category)}
-          className="rounded-sm text-small font-medium text-accent transition-opacity hover:opacity-80"
-        >
-          Compare {name.toLowerCase()} side by side
-        </Link>
-      </p>
+      {selected.length === 0 && (
+        <p className="mt-6 text-small text-ink-muted">
+          Tick <span className="font-medium text-ink">Compare</span> on two or
+          more products to put them side by side.
+        </p>
+      )}
 
       <div className="mt-12">
         <ProductGrid
           products={products}
           emptyMessage="This shelf is empty just now."
+          compare={{ basePath, selected }}
         />
       </div>
+
+      {selected.length > 0 && (
+        <div className="mt-8">
+          <CompareBar
+            products={selection.products}
+            removeHref={(slug) => toggleHref(basePath, selected, slug) ?? basePath}
+            actionHref={compareHref(selected)}
+            sticky
+          />
+        </div>
+      )}
 
       {/* The same shelf on the other axis. */}
       {reduced > 0 && (

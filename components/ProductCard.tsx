@@ -1,25 +1,44 @@
 import Image from "next/image";
 import Link from "next/link";
 import PriceTag from "@/components/PriceTag";
+import { toggleHref } from "@/lib/compare";
 import { formatSaving } from "@/lib/format";
 import type { Product } from "@/lib/products";
 
+export type CompareContext = {
+  /** The page the toggle links back to, e.g. "/catalog/audio". */
+  basePath: string;
+  /** Slugs currently selected on that page. */
+  selected: string[];
+};
+
 /**
- * One product in a grid. Server component — nothing here is interactive
- * beyond the link, and a link needs no JavaScript.
+ * One product in a grid. Server component — the only interactive things here
+ * are links, and links need no JavaScript.
  *
- * The whole card is one link rather than a link on the title, so the tap
- * target is the card. The focus ring therefore lands on the card, which is
- * why the rounded corner is on the link element itself.
+ * The card is not one big link any more. It was, until the compare toggle
+ * arrived: a link inside a link is invalid HTML, so the product link now wraps
+ * the image and the text, and the toggle sits beside it as a sibling. The card
+ * surface and its hover shadow moved up to the <li>.
  */
-export default function ProductCard({ product }: { product: Product }) {
+export default function ProductCard({
+  product,
+  compare,
+}: {
+  product: Product;
+  compare?: CompareContext;
+}) {
   const onSale = product.oldPrice !== undefined;
+  const isSelected = compare?.selected.includes(product.slug) ?? false;
+  const href = compare
+    ? toggleHref(compare.basePath, compare.selected, product.slug)
+    : null;
 
   return (
-    <li>
+    <li className="flex flex-col rounded-lg bg-surface-card p-4 shadow-sm transition-shadow duration-200 hover:shadow-md">
       <Link
         href={`/product/${product.slug}`}
-        className="group block h-full rounded-lg bg-surface-card p-4 shadow-sm transition-shadow duration-200 hover:shadow-md"
+        className="group block flex-1 rounded-lg"
       >
         <div className="relative rounded-xl bg-surface-well p-4">
           <Image
@@ -56,6 +75,34 @@ export default function ProductCard({ product }: { product: Product }) {
           <PriceTag product={product} />
         </div>
       </Link>
+
+      {compare && (
+        <div className="mt-4">
+          {href ? (
+            <Link
+              href={href}
+              scroll={false}
+              className={`inline-flex items-center gap-2 rounded-pill px-3 py-1.5 text-small transition-colors ${
+                isSelected
+                  ? "bg-accent-tint font-medium text-accent"
+                  : "bg-surface-well text-ink-muted hover:text-ink"
+              }`}
+            >
+              <span aria-hidden="true">{isSelected ? "✓" : "+"}</span>
+              {isSelected ? "Comparing" : "Compare"}
+              <span className="sr-only">
+                {isSelected
+                  ? ` — remove ${product.name} from the comparison`
+                  : ` — add ${product.name} to the comparison`}
+              </span>
+            </Link>
+          ) : (
+            <span className="inline-flex items-center rounded-pill bg-surface-well px-3 py-1.5 text-small text-ink-muted">
+              Comparison full
+            </span>
+          )}
+        </div>
+      )}
     </li>
   );
 }

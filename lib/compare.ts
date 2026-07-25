@@ -75,3 +75,66 @@ export function hrefWithout(products: Product[], slug: string): string {
   const rest = products.filter((p) => p.slug !== slug).map((p) => p.slug);
   return compareHref(rest, products[0]?.category);
 }
+
+/* -------------------------------------------------------------------------
+ * Selecting on a category page
+ *
+ * The same selection, held in that page's own address:
+ *
+ *   /catalog/audio?compare=nordvale-hush-pro,cairn-tumble
+ *
+ * This does not drag a parameter through the whole site, because a comparison
+ * can only ever hold one category. The selection therefore needs to exist in
+ * exactly two places — the category page you are picking on, and the
+ * comparison itself. Switching category drops the parameter, which is the
+ * right behaviour: a selection cannot cross categories anyway.
+ * ------------------------------------------------------------------------- */
+
+export const COMPARE_PARAM = "compare";
+
+/** Only products that exist and belong to `category`, deduped and capped. */
+export function parseForCategory(
+  raw: string | string[] | undefined,
+  category: Category,
+): Selection {
+  const value = Array.isArray(raw) ? raw.join(",") : (raw ?? "");
+  const products: Product[] = [];
+  const ignored: string[] = [];
+  const seen = new Set<string>();
+
+  for (const slug of value.split(",").map((s) => s.trim()).filter(Boolean)) {
+    if (seen.has(slug)) continue;
+    seen.add(slug);
+
+    const product = getProduct(slug);
+    if (!product || product.category !== category || products.length >= MAX_COMPARE) {
+      ignored.push(slug);
+      continue;
+    }
+    products.push(product);
+  }
+
+  return { products, ignored };
+}
+
+/**
+ * Where the toggle on a card points. Returns null when the slug is not
+ * selected and the selection is already full — there is no href for "add a
+ * fifth", so the card renders a plain full state instead of a dead link.
+ */
+export function toggleHref(
+  basePath: string,
+  selected: string[],
+  slug: string,
+): string | null {
+  const isSelected = selected.includes(slug);
+  if (!isSelected && selected.length >= MAX_COMPARE) return null;
+
+  const next = isSelected
+    ? selected.filter((s) => s !== slug)
+    : [...selected, slug];
+
+  return next.length === 0
+    ? basePath
+    : `${basePath}?${COMPARE_PARAM}=${next.join(",")}`;
+}

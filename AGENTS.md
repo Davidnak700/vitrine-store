@@ -165,11 +165,18 @@ docs/
 - Format prices in one place (`lib/format.ts`), never inline in components.
   Locale `en-GB`, currency `GBP`. Prices are stored as plain numbers; the
   currency exists only in the formatter.
-- Compare selection lives in the URL: `/compare?items=slug-a,slug-b`. No
-  context, no storage, no client component — a comparison is shareable and
-  the back button works. The consequence, accepted deliberately: there is no
-  site-wide bar that accumulates while you browse, because other pages do not
-  carry the selection. Products are added from the compare page itself.
+- Compare selection lives in the URL. No context, no storage, no client
+  component — a comparison is shareable and the back button works.
+  - While choosing, it is in the category page's own query string:
+    `/catalog/audio?compare=slug-a,slug-b`. Each card's toggle is a link that
+    adds or drops its slug.
+  - The comparison itself is `/compare?items=slug-a,slug-b`.
+  - This does not leak into the rest of the navigation, because a comparison
+    can only hold one category — so the selection only ever needs to exist on
+    those two pages. Category links carry no `compare` param, so switching
+    shelf clears the selection, which is correct.
+  - Reading a search param makes `/catalog/[category]` render on demand
+    instead of at build time. That is the price of having no client state.
 - Cart: React Context + localStorage. This one genuinely needs `"use client"` —
   a basket has to survive navigation, and the URL is the wrong place for it.
   Remember that localStorage is unavailable during server rendering, so don't

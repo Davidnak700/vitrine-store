@@ -4,7 +4,7 @@ import Link from "next/link";
 import CompareBar from "@/components/CompareBar";
 import PriceTag from "@/components/PriceTag";
 import { categories, getCategory, isCategory } from "@/lib/categories";
-import { hrefWith, MAX_COMPARE, parseItems } from "@/lib/compare";
+import { hrefWith, hrefWithout, MAX_COMPARE, parseItems } from "@/lib/compare";
 import { getProductsByCategory } from "@/lib/products";
 
 export const metadata: Metadata = {
@@ -61,7 +61,10 @@ export default async function ComparePage({ searchParams }: Search) {
 
       {products.length > 0 && (
         <div className="mt-8">
-          <CompareBar products={products} />
+          <CompareBar
+            products={products}
+            removeHref={(slug) => hrefWithout(products, slug)}
+          />
         </div>
       )}
 
