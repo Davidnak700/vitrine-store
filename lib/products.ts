@@ -999,3 +999,23 @@ export function getNewArrivals(options?: SelectorOptions): Product[] {
 export function getDealsByCategory(category: Category): Product[] {
   return getProductsByCategory(category).filter(isOnSale);
 }
+
+/**
+ * Search by name and brand.
+ *
+ * Every word typed has to appear somewhere in the name or the brand, so
+ * "halden headphones" finds nothing while "halden field" finds the Field One.
+ * Deliberately not a fuzzy match: with 36 products a near-miss is more
+ * confusing than an honest empty result.
+ */
+export function searchProducts(query: string): Product[] {
+  const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+  if (terms.length === 0) return [];
+
+  return products
+    .filter((product) => {
+      const haystack = `${product.name} ${product.brand}`.toLowerCase();
+      return terms.every((term) => haystack.includes(term));
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
+}

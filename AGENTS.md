@@ -111,6 +111,13 @@ type ImageCredit = {
 ```
 
 Store only what can't be derived. No `isNew` or `isSale` fields.
+
+**Any count shown to the user must be derived from the same filtered list that
+is rendered, never from the raw source.** The basket badge once counted stored
+lines while the drawer counted lines matched against the catalogue — two
+sources of truth for one number, so it read 11 items over a basket showing 9.
+Same shape of mistake as an `isSale` field that disagrees with `oldPrice`:
+filter once, then count and render from that.
 Within a category, every product must use the same set of spec `label`
 values, otherwise the comparison table won't line up row by row.
 
