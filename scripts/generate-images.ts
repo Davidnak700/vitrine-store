@@ -87,9 +87,55 @@ const DESCRIPTIONS: Record<string, string> = {
   "cairn-hub-one":
     "a small matte white smart home hub, a plain rounded cube with no visible ports, one soft indicator light on the front",
 
-  // ----------------------------------------------------------------- others
-  // Filled in as each category comes up. Anything missing is reported rather
-  // than guessed, so a typo in a slug cannot quietly produce a wrong picture.
+  // --------------------------------------------------------------- laptops
+  // Six lids and a keyboard, so the silhouettes were assigned before any of
+  // the six were written: open three-quarter, closed from above, wide open
+  // front, closed on its edge, side profile, folded flat as a tablet.
+  // Screens are off throughout — rendered interface text garbles.
+  "halden-slate-14":
+    "a slim silver aluminium laptop standing open at a normal working angle, seen from three-quarters front, screen off and showing uniform black glass",
+  "nordvale-drift-13":
+    "a small closed silver laptop lying flat on its base, seen from directly above at a slight angle, smooth blank lid",
+  "kestrel-forge-16":
+    "a large dark grey laptop standing open wide, seen straight on from slightly below so the screen fills the frame, screen off and showing uniform black glass",
+  "cairn-field-15":
+    "a thick closed dark grey rugged laptop standing on its long edge, textured shell with reinforced rounded corners, seen from three-quarters",
+  "tolvan-loom-14":
+    "a plain grey laptop open at a right angle, seen from directly at its side as a clean L profile, screen off and showing uniform black glass",
+  "vellum-arc-13":
+    "a convertible laptop folded all the way back into a flat tablet, lying screen upwards on its keyboard, seen from above at a slight angle, screen off and showing uniform black glass",
+
+  // ----------------------------------------------------------------- phones
+  // Six slabs. Assigned: upright front, flat face down, upright back with the
+  // camera, flat from above, small three-quarter, edge-on profile.
+  "orla-pulse-7":
+    "a black smartphone standing upright facing the viewer, thin even bezels, screen off and showing uniform black glass",
+  "halden-ridge-5":
+    "a thick dark blue smartphone lying face down on its back, seen from above at a slight angle, plain matte back with one small camera bump in the corner",
+  "kestrel-vega-x":
+    "a black smartphone standing upright with its back to the viewer, three circular camera lenses arranged in a square raised housing in the upper corner",
+  "tolvan-note-4":
+    "a plain grey smartphone lying flat on its back, seen from directly above, screen off and showing uniform black glass",
+  "brisk-ember-3":
+    "a small short smartphone standing upright at a three-quarter angle, compact body noticeably shorter than a normal phone, screen off and showing uniform black glass",
+  "sable-quill-2":
+    "a smartphone seen edge on from its long side, standing upright, an extremely thin profile with a polished metal rim",
+
+  // -------------------------------------------------------------------- tvs
+  // Six dark rectangles, so the stand does the distinguishing: two feet,
+  // central pedestal, steep side profile, wide plinth, compact stand, wall.
+  "nordvale-vista-43":
+    "a television standing on two narrow feet at its outer edges, seen straight on from the front, screen off and showing uniform black glass",
+  "halden-pane-50":
+    "a television on a single central pedestal stand, seen from three-quarters, screen off and showing uniform black glass",
+  "kestrel-lumen-55":
+    "a television seen at a steep angle from its side, showing an extremely thin panel edge, standing on a slim plate base",
+  "cairn-broad-65":
+    "a large wide television resting on a broad flat plinth base, seen straight on from the front, screen off and showing uniform black glass",
+  "tolvan-frame-32":
+    "a small compact television on a simple narrow central stand, seen from three-quarters, screen off and showing uniform black glass",
+  "sable-reel-75":
+    "a very large television mounted flat against a pale wall with no stand beneath it, seen straight on from the front, screen off and showing uniform black glass",
 };
 
 type Target = { slug: string; category: string; file: string };

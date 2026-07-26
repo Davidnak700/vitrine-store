@@ -120,20 +120,58 @@ A second, cheaper lesson: a description that is accurate but generic will
 collide with another product's silhouette. The camera-shaped sensor would have
 duplicated `orla-chime`, the video doorbell, in the same grid.
 
-**Do not prompt with negations — they fail in both directions.** Measured on
-the second smart-home pass, where both fixes were written as prohibitions and
-both misfired:
+### The rule: describe only what is present
 
-| Prompt said | Result |
+**Never write a prompt as a prohibition. Say what the object has, give it one
+identifying feature, and stop.**
+
+This is the rule, not a tip. It was arrived at by writing two fixes as
+prohibitions and having both misfire, in opposite directions — which is what
+makes it a rule rather than a knack, because there is no amount of prohibition
+that lands between the two failures.
+
+**Direction one — a prohibition keeps the word in the prompt, and the word gets
+drawn.** `not a wall socket, no socket holes or slots anywhere` produced socket
+holes again, this time with a single pin beside them: anatomically incoherent,
+and worse than the first attempt. The model has no reliable operator for "not".
+Naming the thing you are trying to avoid is indistinguishable, to the model,
+from asking for it.
+
+**Direction two — heavy suppression takes the subject's identity with it.**
+`no lens, no camera, no glass, no aperture` did remove the camera, and removed
+everything else that made the object legible along with it. What came back was
+a smooth white wedge that could as easily have been a bin or a lampshade. The
+prohibition worked and the picture was still useless.
+
+So the two failures are not opposite ends of a dial to be tuned between. Both
+come from spending the prompt on absence. Spend it on presence instead:
+
+| Instead of | Write |
 | --- | --- |
-| "not a wall socket, no socket holes or slots anywhere" | socket holes again, now with a single pin beside them — anatomically incoherent |
-| "no lens, no camera, no glass, no aperture" | every feature suppressed; a blank white wedge that could be a bin |
+| `not a wall socket, no socket holes` | `two flat rectangular metal prongs standing proud of its smooth front face` |
+| `no lens, no camera, no glass` | `a pale ridged semicircular plastic dome across its angled upper face` |
 
-Naming a thing to forbid it keeps that word in the prompt and the model draws
-it. Piling on prohibitions instead strips the object of the features that made
-it recognisable. **Describe only what is present**: `two flat rectangular metal
-prongs standing proud of its front face`, not `not a socket`. Give the object
-the one part that identifies it and stop.
+One identifying feature is the target. Fewer and the object has no identity;
+more and the description starts naming parts that belong to a neighbouring
+product category, which is what pulled the sensor towards a camera in the first
+place.
+
+### Silhouettes must differ inside a category
+
+The same rule the illustrations taught, and it applies to generated frames
+exactly as it did to drawings: six pictures that are one picture with a detail
+moved will read as a thin catalogue.
+
+Generation makes this easier to get wrong, because a prompt that is accurate
+for two products produces two near-identical bodies. `ferrite-sense` and
+`cairn-hub-one` both came back as smooth white objects with no features worth
+distinguishing — accurate in both cases, and wrong as a pair.
+
+Watch it hardest where the products genuinely share a shape. Six laptops are
+six lids and a keyboard; six televisions are six dark rectangles. Vary the
+viewpoint, whether the thing is open or closed, and how the mass sits in frame,
+and decide that per category before writing any of the six descriptions rather
+than discovering the collision afterwards.
 
 ### What the free ZeroGPU quota actually buys
 
