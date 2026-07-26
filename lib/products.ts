@@ -800,8 +800,12 @@ export const products: Product[] = [
     price: 15,
     addedAt: "2026-03-28",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/accessories/ferrite-cord-2m.jpg",
+    imageCredit: {
+      photographer: "ready made",
+      source: "Pexels",
+      url: "https://www.pexels.com/photo/close-up-photo-of-cord-3921633/",
+    },
     shortDescription: "A charging cable that outlasts the thing you bought it for.",
     description:
       "Braided sleeve, moulded strain relief at both ends, and a two-metre length that reaches the sofa. Cables fail where they bend, so that is where this one is reinforced. It carries full charging speed and video, so it also drives a monitor.",
@@ -824,8 +828,12 @@ export const products: Product[] = [
     oldPrice: 55,
     addedAt: "2026-01-30",
     bestseller: true,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/accessories/ferrite-brick-65.jpg",
+    imageCredit: {
+      photographer: "I'm Zion",
+      source: "Pexels",
+      url: "https://www.pexels.com/photo/gallium-nitride-chargers-over-blue-surface-4865059/",
+    },
     shortDescription: "One charger for the laptop, the phone and the headphones.",
     description:
       "Two sockets, enough power for a laptop, and pins that fold flat so it does not tear the lining of your bag. Plug two things in and it divides the power sensibly between them. This is the one to buy if you are tired of carrying three chargers.",
@@ -847,8 +855,12 @@ export const products: Product[] = [
     price: 59,
     addedAt: "2025-11-06",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/accessories/vellum-rise.jpg",
+    imageCredit: {
+      photographer: "Workperch",
+      source: "Unsplash",
+      url: "https://unsplash.com/photos/black-and-silver-laptop-computer-on-brown-wooden-table-iTUZ7VcJI8M",
+    },
     shortDescription: "Lifts the screen to eye level, which your neck will notice within a week.",
     description:
       "A laptop on a desk puts the screen too low, and you lean forward all day to compensate. This raises it by about fifteen centimetres. You will need a separate keyboard once the laptop is up there — that is how it is supposed to work.",
@@ -871,8 +883,12 @@ export const products: Product[] = [
     oldPrice: 85,
     addedAt: "2026-04-24",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/accessories/kestrel-glide.jpg",
+    imageCredit: {
+      photographer: "Andrey Matveev",
+      source: "Pexels",
+      url: "https://www.pexels.com/photo/sleek-white-wireless-mouse-on-vibrant-yellow-32995421/",
+    },
     shortDescription: "Quiet, accurate, and shaped for a hand rather than a photograph.",
     description:
       "The buttons are pressure-damped, so a whole afternoon of clicking does not annoy the room. It connects to three machines at once and switches between them with a button underneath. Battery life is measured in months, not days.",
@@ -894,8 +910,12 @@ export const products: Product[] = [
     price: 119,
     addedAt: "2026-06-18",
     bestseller: true,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/accessories/halden-press.jpg",
+    imageCredit: {
+      photographer: "Clay Banks",
+      source: "Unsplash",
+      url: "https://unsplash.com/photos/silver-and-white-computer-keyboard-PXaQXThG1FY",
+    },
     shortDescription: "A keyboard that is pleasant to type on and quiet enough for an office.",
     description:
       "Low-profile keys with a short, definite press, and no rattle. It is a compact layout, so the number pad is gone and your mouse hand sits closer in. Pairs with three devices, and runs for a couple of months between charges.",
@@ -917,8 +937,12 @@ export const products: Product[] = [
     price: 49,
     addedAt: "2026-07-20",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/accessories/sable-carry-14.jpg",
+    imageCredit: {
+      photographer: "Lee Campbell",
+      source: "Pexels",
+      url: "https://www.pexels.com/photo/closed-grey-leather-case-89723/",
+    },
     shortDescription: "A sleeve thick enough to matter when the bag goes down hard.",
     description:
       "Most sleeves are a thin layer of felt that stops scratches and nothing else. This one has a padded core, so a laptop inside it survives a bag being dropped. There is a flat pocket on the back for a charger and a cable.",

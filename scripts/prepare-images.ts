@@ -41,12 +41,37 @@ const DIFFERENCE = 38;
 /** Share of a row or column that must differ before it counts as product. */
 const OCCUPANCY = 0.006;
 
-/** Per-image overrides, where the automatic frame needs a nudge. */
-const TWEAKS: Record<string, { margin?: number }> = {
+/**
+ * Per-image overrides, where the automatic frame needs a nudge.
+ *
+ * `margin`  clear space around the product, as a fraction of its longest side.
+ * `scale`   multiplies the finished 4:3 box. Below 1 tightens the crop.
+ * `offsetX` moves the box sideways, as a fraction of its own width. Positive
+ * `offsetY` is right and down. The box stays inside the image either way.
+ *
+ * Offset exists because the product finder is a threshold, not a cut-out: a
+ * second object in the frame counts as product, inflates the bounding box and
+ * drags the centre towards itself. When that object is something we want out
+ * of shot, no `margin` can help — the box is already too big and centred in
+ * the wrong place. Shrink it with `scale`, then walk it off the intruder with
+ * the offsets.
+ *
+ * This is the honest, per-image escape hatch. It is not background removal,
+ * which was tried and does not work — see docs/image-spec.md.
+ */
+type Tweak = { margin?: number; scale?: number; offsetX?: number; offsetY?: number };
+
+const TWEAKS: Record<string, Tweak> = {
   // Trailing cable reads as product and drags the frame right; hold it in.
   "orla-loop": { margin: 0.04 },
   // Blue tube lights behind the speakers count as product; crop past them.
   "vellum-shelf": { margin: 0.02 },
+  // A USB hub shares the frame bottom-right. Tighten onto the cable and walk
+  // the box up and left until the hub is outside it.
+  "ferrite-cord-2m": { scale: 0.54, offsetX: -0.34, offsetY: -0.44 },
+  // Two chargers in the shot. Crop to the right-hand one, which is the one
+  // showing two USB-C ports, as the specification says it has.
+  "ferrite-brick-65": { scale: 0.66, offsetX: 0.36, offsetY: 0.13 },
 };
 
 async function prepare(file: string, outFile: string, slug: string) {
@@ -104,7 +129,8 @@ async function prepare(file: string, outFile: string, slug: string) {
   const productW = right - left + 1;
   const productH = bottom - top + 1;
 
-  const margin = (TWEAKS[slug]?.margin ?? MARGIN) * Math.max(productW, productH);
+  const tweak = TWEAKS[slug] ?? {};
+  const margin = (tweak.margin ?? MARGIN) * Math.max(productW, productH);
   let boxW = productW + margin * 2;
   let boxH = productH + margin * 2;
 
@@ -112,13 +138,20 @@ async function prepare(file: string, outFile: string, slug: string) {
   if (boxW / boxH > 4 / 3) boxH = (boxW * 3) / 4;
   else boxW = (boxH * 4) / 3;
 
-  // Clamp to the image, keeping 4:3.
-  const scale = Math.min(1, width / boxW, height / boxH);
-  boxW = Math.floor(boxW * scale);
-  boxH = Math.floor(boxH * scale);
+  // Tighten the whole frame, for images where the box came out too generous
+  // because something else in the shot counted as product.
+  boxW *= tweak.scale ?? 1;
+  boxH *= tweak.scale ?? 1;
 
-  const cx = (left + right) / 2;
-  const cy = (top + bottom) / 2;
+  // Clamp to the image, keeping 4:3.
+  const fit = Math.min(1, width / boxW, height / boxH);
+  boxW = Math.floor(boxW * fit);
+  boxH = Math.floor(boxH * fit);
+
+  // Offsets are a share of the box, so they mean the same thing at any
+  // source resolution. Clamping below keeps the box on the image.
+  const cx = (left + right) / 2 + (tweak.offsetX ?? 0) * boxW;
+  const cy = (top + bottom) / 2 + (tweak.offsetY ?? 0) * boxH;
   const cropLeft = Math.max(0, Math.min(Math.round(cx - boxW / 2), width - boxW));
   const cropTop = Math.max(0, Math.min(Math.round(cy - boxH / 2), height - boxH));
 

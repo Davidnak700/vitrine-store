@@ -229,29 +229,36 @@ Deals and About sit here because they were dropped from the header.
 
 ## Content and images
 
+### Copy
+
 - Site content is English-only. No internationalisation, no RTL support,
   no locale switcher, and no notes about possible future languages.
 - All copy must be original. Don't copy descriptions from real stores.
-- Product and brand names are invented. Do not use real trademarks
-  or their product photography.
-- Product imagery is **photography**, from Unsplash and Pexels under their
-  free licences. Verify the licence on the photo page — Unsplash+ is a paid
-  tier and is not usable. Record photographer, source and page URL in the
-  product's `imageCredit`.
-- Visible brand marks in photographs are fine. Requiring logo-free shots was
-  tried and cost eighteen rejections for one usable image.
-- Originals go in `assets/photos/<category>/` untouched;
-  `npm run images:prepare` crops them tight to 4:3 into
-  `public/img/<category>/`.
-- **Read `docs/image-spec.md` before changing anything about imagery.** It
-  records what has already been tried and measured — in particular that
-  unifying the photo backgrounds in code cannot work, and why.
-- If a photograph shows something other than the product as written, change
-  the product. The products are invented; the photograph is not.
-- A generated-SVG illustration system is kept as a documented fallback
-  (`scripts/product-art.mjs`, `npm run art`). It is not referenced by
-  `lib/products.ts`.
-- Products without their own image point at `/img/placeholder.svg`.
+- Product and brand names are invented. Don't name a real brand in the copy
+  and don't pass a real company's marketing off as ours.
+
+### Images
+
+**`docs/image-spec.md` is the single source for imagery rules.** Read it before
+changing anything about images. The rules are not repeated here.
+
+Only two facts about imagery belong in this file, because the rest of it
+depends on them: product imagery is photography from Unsplash and Pexels under
+their free licences, and a photograph of an invented product is a photograph of
+some real, branded thing.
+
+That second point is why this section was rewritten. The rules used to live in
+both documents and drifted apart: this file forbade real trademarks outright
+while `image-spec.md` allowed visible brand marks. `image-spec.md` was the
+correct one — the logo-free requirement was dropped deliberately, after it was
+measured at eighteen rejections for one usable image. The contradiction went
+unnoticed because both rules sat four lines apart in the same list, and it only
+surfaced when a photograph of a recognisable keyboard had to be judged against
+them.
+
+The same failure as a stage marker nobody updates: one rule, two homes, no way
+to tell which is current. So imagery now has one home, and this file points at
+it instead of restating it.
 
 ## Visual direction
 
@@ -408,6 +415,6 @@ of the project to anyone who read it first.
 
 Current stage: **all ten complete.** Live at https://vitrine-store.vercel.app/
 
-The work that remains is not a stage: thirty of the thirty-six products still
-use `PLACEHOLDER_IMAGE`. Only audio has been photographed. See **Content and
-images** above and `docs/image-spec.md` before collecting more.
+The work that remains is not a stage: twenty-four of the thirty-six products
+still use `PLACEHOLDER_IMAGE`. Audio and accessories have been photographed.
+Read `docs/image-spec.md` before collecting more.

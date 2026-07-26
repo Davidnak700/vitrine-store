@@ -1,7 +1,7 @@
 # Product imagery
 
-Audio ships **photographs**. The other five categories still show the shared
-placeholder.
+Audio and accessories ship **photographs**. The other four categories still
+show the shared placeholder.
 
 A parallel system of flat SVG illustrations is kept in the repository as a
 working fallback — see [Illustration fallback](#illustration-fallback) below.
@@ -83,6 +83,52 @@ When the photograph shows something other than the product as written, **change
 the product, not the photograph** — the products are invented. `orla-loop` was
 specified as wireless open-ear clips; no stock library has that category yet,
 so the product became wired over-ear clips to match the photograph that exists.
+
+This file is the **single source for imagery rules**. `AGENTS.md` used to
+restate them and the two drifted: it forbade real trademarks outright while
+this file allowed visible brand marks. Brand marks are allowed — that is
+settled, and measured. `AGENTS.md` now points here rather than repeating, so
+the two cannot disagree again.
+
+### What the search actually costs, per category
+
+Measured while collecting accessories. Both of these look like a searching
+problem and are not.
+
+**Keyboards fail on three things at once**, and the filter removes almost
+everything: a visible cable, a number pad, and a non-Latin layout. Four
+consecutive rejections ran Cyrillic, Cyrillic, German QWERTZ, and a full-size
+wired board with a number pad. A product specified as compact and wireless on
+an English-only site rules out most of what stock libraries hold. One candidate
+in five passed. Search for the layout, not the word "keyboard".
+
+**A laptop stand is never the subject of a stock photograph.** Across
+`laptop stand`, `laptop riser` and `notebook stand isolated` on both libraries,
+every result is a desk scene where the stand sits under a laptop with a mouse,
+a plant or a mug beside it. There is no isolated product shot of a stand,
+because nobody photographs one — a stand alone reads as an abstract wedge and
+is not recognisable as what it is.
+
+**Two backdrops in six come out saturated, and that is the running rate.**
+Measured as mean HSL saturation over a border band of the finished crop, which
+samples backdrop rather than product:
+
+| Category | Saturated backdrops (≥40%) | Which |
+| --- | --- | --- |
+| audio | 2 of 6 | `kestrel-bud-2` 94%, `vellum-shelf` 77% |
+| accessories | 2 of 6 | `ferrite-brick-65` 97%, `kestrel-glide` 78% |
+
+Worth knowing before anyone proposes a fix: the accessories row is not worse
+than the audio row that has been shipping since stage 4, it is identical in
+ratio. Two loud frames per six is what free stock photography costs here, and
+the tight crop is the only lever — see the section above on why processing the
+backdrops cannot work. Do not reject an otherwise correct photograph for a
+coloured backdrop alone.
+
+So for stands, **a laptop in the frame is the expected result, not a defect**.
+Judge the shot on whether the stand is whole and the background is clean, and
+accept the laptop. Do not spend a budget hunting for a stand on its own; it is
+the same shape of mistake as hunting for logo-free product photography.
 
 ## Illustration fallback
 
@@ -178,13 +224,13 @@ strokes merges elements that should stay separate.
 | Category | Shipping | Illustration fallback |
 | --- | --- | --- |
 | audio | 6 photographs | 6 drawn |
+| accessories | 6 photographs | — |
 | laptops | placeholder | — |
 | phones | placeholder | — |
 | tvs | placeholder | — |
 | smart-home | placeholder | — |
-| accessories | placeholder | — |
 
-The remaining thirty images are **not tied to a stage**. All ten stages are
+The remaining twenty-four images are **not tied to a stage**. All ten stages are
 finished and the site is live; collecting them is ongoing work that runs after
 launch, one category at a time.
 
