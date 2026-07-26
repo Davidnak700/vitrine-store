@@ -45,7 +45,7 @@ export default function CompareBar({
                 <Link
                   href={removeHref(product.slug)}
                   scroll={false}
-                  className="flex items-center gap-2 rounded-pill bg-surface-well px-3 py-1.5 text-small text-ink transition-colors hover:bg-accent-tint hover:text-accent"
+                  className="flex min-h-11 items-center gap-2 rounded-pill bg-surface-well px-3 text-small text-ink transition-colors hover:bg-accent-tint hover:text-accent"
                 >
                   {product.name}
                   <span aria-hidden="true">&times;</span>

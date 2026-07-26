@@ -22,7 +22,7 @@ export default function CartButton() {
           ? `Basket, ${count} ${count === 1 ? "item" : "items"}`
           : "Basket"
       }
-      className="relative flex size-10 items-center justify-center rounded-pill bg-surface-well text-ink transition-colors hover:bg-accent-tint hover:text-accent"
+      className="relative flex size-11 items-center justify-center rounded-pill bg-surface-well text-ink transition-colors hover:bg-accent-tint hover:text-accent"
     >
       <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="size-5">
         <path

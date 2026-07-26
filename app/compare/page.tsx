@@ -80,7 +80,7 @@ export default async function ComparePage({ searchParams }: Search) {
               <li key={entry.slug}>
                 <Link
                   href={`/compare?category=${entry.slug}`}
-                  className="block rounded-pill bg-surface-card px-4 py-2 text-small text-ink shadow-sm transition-shadow duration-200 hover:shadow-md"
+                  className="flex min-h-11 items-center rounded-pill bg-surface-card px-4 text-small text-ink shadow-sm transition-shadow duration-200 hover:shadow-md"
                 >
                   {entry.name}
                 </Link>
@@ -276,7 +276,7 @@ export default async function ComparePage({ searchParams }: Search) {
               <li key={product.slug}>
                 <Link
                   href={hrefWith(products, product.slug)}
-                  className="block rounded-pill bg-surface-card px-4 py-2 text-small text-ink shadow-sm transition-shadow duration-200 hover:shadow-md"
+                  className="flex min-h-11 items-center rounded-pill bg-surface-card px-4 text-small text-ink shadow-sm transition-shadow duration-200 hover:shadow-md"
                 >
                   {product.name}
                 </Link>
@@ -290,7 +290,7 @@ export default async function ComparePage({ searchParams }: Search) {
         <p className="mt-12 text-small text-ink-muted">
           <Link
             href={`/catalog/${category}`}
-            className="rounded-sm font-medium text-accent transition-opacity hover:opacity-80"
+            className="inline-flex min-h-11 items-center rounded-sm font-medium text-accent transition-opacity hover:opacity-80"
           >
             Back to all {getCategory(category).name.toLowerCase()}
           </Link>

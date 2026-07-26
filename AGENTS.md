@@ -403,6 +403,13 @@ No colour or size may bypass a token.
 ## Quality baseline
 
 - Responsive from 360px up to desktop.
+- **Every interactive control is at least 44px in its smallest dimension.**
+  Links, buttons, steppers, chips, nav pills, footer links — all of them. Use
+  `min-h-11` with `flex items-center` on things sized by their text, and
+  `size-11` on square icon buttons; padding alone tends to land at 32 or 40.
+  This is a standing rule rather than a fix that happened once: the phone audit
+  found 21 undersized controls on the home page and 33 on a category page, and
+  they arrived one component at a time, each individually reasonable.
 - Visible `:focus-visible` ring for keyboard navigation, using
   `--focus-ring`. Never removed.
 - Meaningful `alt` on every image.

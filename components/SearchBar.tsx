@@ -71,8 +71,8 @@ export default function SearchBar({
         type="submit"
         className={
           full
-            ? "rounded-pill bg-ink px-5 py-2.5 text-small font-medium text-surface-card transition-opacity hover:opacity-90"
-            : "flex size-8 items-center justify-center rounded-pill text-ink-muted transition-colors hover:text-accent"
+            ? "flex min-h-11 items-center rounded-pill bg-ink px-5 text-small font-medium text-surface-card transition-opacity hover:opacity-90"
+            : "flex size-11 items-center justify-center rounded-pill text-ink-muted transition-colors hover:text-accent"
         }
       >
         {full ? (

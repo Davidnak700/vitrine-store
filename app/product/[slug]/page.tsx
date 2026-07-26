@@ -39,7 +39,7 @@ export default async function ProductPage({ params }: Params) {
     <div className="mx-auto max-w-page px-6 py-12 md:py-24">
       <Link
         href={`/catalog/${category.slug}`}
-        className="rounded-sm text-small font-medium text-accent transition-opacity hover:opacity-80"
+        className="inline-flex min-h-11 items-center rounded-sm text-small font-medium text-accent transition-opacity hover:opacity-80"
       >
         &larr; All {category.name.toLowerCase()}
       </Link>
@@ -94,7 +94,7 @@ export default async function ProductPage({ params }: Params) {
           <p className="mt-4">
             <Link
               href={compareHref([product.slug])}
-              className="rounded-sm text-small font-medium text-accent transition-opacity hover:opacity-80"
+              className="inline-flex min-h-11 items-center rounded-sm text-small font-medium text-accent transition-opacity hover:opacity-80"
             >
               Compare with other {category.name.toLowerCase()}
             </Link>

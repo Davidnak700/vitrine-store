@@ -61,7 +61,7 @@ export default async function SaleCategoryPage({ params }: Params) {
       <p className="mt-12 text-small text-ink-muted">
         <Link
           href={`/catalog/${category}`}
-          className="rounded-sm font-medium text-accent transition-opacity hover:opacity-80"
+          className="inline-flex min-h-11 items-center rounded-sm font-medium text-accent transition-opacity hover:opacity-80"
         >
           See all {total} {name.toLowerCase()}
         </Link>{" "}

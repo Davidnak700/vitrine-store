@@ -73,7 +73,7 @@ export default function Home() {
           </h2>
           <Link
             href="/catalog"
-            className="rounded-sm text-small font-medium text-accent transition-opacity hover:opacity-80"
+            className="flex min-h-11 items-center rounded-sm text-small font-medium text-accent transition-opacity hover:opacity-80"
           >
             See everything
           </Link>
@@ -117,7 +117,7 @@ export default function Home() {
           </h2>
           <Link
             href="/sale"
-            className="rounded-sm text-small font-medium text-accent transition-opacity hover:opacity-80"
+            className="flex min-h-11 items-center rounded-sm text-small font-medium text-accent transition-opacity hover:opacity-80"
           >
             All deals
           </Link>

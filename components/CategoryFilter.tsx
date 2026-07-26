@@ -22,7 +22,7 @@ export default function CategoryFilter({
   allLabel?: string;
 }) {
   const pill =
-    "block rounded-pill px-4 py-2 text-small transition-colors whitespace-nowrap";
+    "flex min-h-11 items-center rounded-pill px-4 text-small transition-colors whitespace-nowrap";
   const active = "bg-accent-tint font-medium text-accent";
   const idle = "bg-surface-card text-ink-muted hover:text-ink";
 

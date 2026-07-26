@@ -33,7 +33,7 @@ export default function CatalogPage() {
             </h2>
             <Link
               href={`/catalog/${category.slug}`}
-              className="rounded-sm text-small font-medium text-accent transition-opacity hover:opacity-80"
+              className="flex min-h-11 items-center rounded-sm text-small font-medium text-accent transition-opacity hover:opacity-80"
             >
               Just {category.name.toLowerCase()}
             </Link>

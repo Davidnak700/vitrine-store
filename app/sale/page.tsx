@@ -49,7 +49,7 @@ export default function SalePage() {
         Looking for something that is not on offer?{" "}
         <Link
           href="/catalog"
-          className="rounded-sm font-medium text-accent transition-opacity hover:opacity-80"
+          className="inline-flex min-h-11 items-center rounded-sm font-medium text-accent transition-opacity hover:opacity-80"
         >
           Browse the full catalogue
         </Link>

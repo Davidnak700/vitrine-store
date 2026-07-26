@@ -91,7 +91,7 @@ export default function ProductCard({
             <Link
               href={href}
               scroll={false}
-              className={`inline-flex items-center gap-2 rounded-pill px-3 py-1.5 text-small transition-colors ${
+              className={`inline-flex min-h-11 items-center gap-2 rounded-pill px-3 text-small transition-colors ${
                 isSelected
                   ? "bg-accent-tint font-medium text-accent"
                   : "bg-surface-well text-ink-muted hover:text-ink"
@@ -106,7 +106,7 @@ export default function ProductCard({
               </span>
             </Link>
           ) : (
-            <span className="inline-flex items-center rounded-pill bg-surface-well px-3 py-1.5 text-small text-ink-muted">
+            <span className="inline-flex min-h-11 items-center rounded-pill bg-surface-well px-3 text-small text-ink-muted">
               Comparison full
             </span>
           )}

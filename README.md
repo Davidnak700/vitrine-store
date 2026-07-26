@@ -185,6 +185,13 @@ does not touch the actual problem: four products will not fit across 375px as
 columns, so the page showed the labels and one product at a time — the
 opposite of a comparison.
 
+The distinction worth drawing is between removing a defect and taming one.
+Pinning the columns would have made the sideways scroll easier to live with;
+**the block view has no horizontal scroll container at all.** At 375px the page
+now contains nothing that scrolls sideways — not a tidier scroller, none. That
+was the point of measuring first: the scroll box was a symptom, and a fix aimed
+at the symptom would have been indistinguishable from progress.
+
 Below `md` the table is replaced by one block per specification, with all four
 products listed down it. Stacked as rows they fit, the axis that scrolls
 becomes the one a phone scrolls anyway, and every value on screen sits next to

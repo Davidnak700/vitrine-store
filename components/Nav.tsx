@@ -24,7 +24,7 @@ export default function Nav() {
           <li key={category.slug}>
             <Link
               href={`/catalog/${category.slug}`}
-              className="block rounded-pill px-3 py-2 text-small whitespace-nowrap text-ink-muted transition-colors hover:bg-surface-well hover:text-ink"
+              className="flex min-h-11 items-center rounded-pill px-3 text-small whitespace-nowrap text-ink-muted transition-colors hover:bg-surface-well hover:text-ink"
             >
               {category.name}
             </Link>

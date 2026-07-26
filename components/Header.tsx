@@ -11,7 +11,7 @@ export default function Header() {
         <div className="flex h-16 items-center gap-4">
           <Link
             href="/"
-            className="rounded-md font-display text-h3 font-medium tracking-tight text-ink"
+            className="flex min-h-11 items-center rounded-md font-display text-h3 font-medium tracking-tight text-ink"
           >
             Vitrine
           </Link>

@@ -98,7 +98,7 @@ export default async function CategoryPage({ params, searchParams }: Params) {
         <p className="mt-12 text-small text-ink-muted">
           <Link
             href={`/sale/${category}`}
-            className="rounded-sm font-medium text-accent transition-opacity hover:opacity-80"
+            className="inline-flex min-h-11 items-center rounded-sm font-medium text-accent transition-opacity hover:opacity-80"
           >
             Just the {reduced} reduced {name.toLowerCase()}
           </Link>{" "}

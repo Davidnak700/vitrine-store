@@ -69,18 +69,23 @@ export default function Footer() {
               <h2 className="text-label font-semibold uppercase text-ink-muted">
                 {column.heading}
               </h2>
-              <ul className="mt-4 space-y-3">
+              {/* The gap between items is small because the links carry their
+                  own 44px height now. Keeping both would space the column out
+                  twice over. */}
+              <ul className="mt-2 space-y-1">
                 {column.items.map((item) => (
                   <li key={item.label} className="text-small">
                     {item.href ? (
                       <Link
                         href={item.href}
-                        className="rounded-sm text-ink transition-colors hover:text-accent"
+                        className="flex min-h-11 items-center rounded-sm text-ink transition-colors hover:text-accent"
                       >
                         {item.label}
                       </Link>
                     ) : (
-                      <span className="text-ink-muted">{item.label}</span>
+                      <span className="flex min-h-11 items-center text-ink-muted">
+                        {item.label}
+                      </span>
                     )}
                   </li>
                 ))}
