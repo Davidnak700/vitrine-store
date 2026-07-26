@@ -400,4 +400,14 @@ No colour or size may bypass a token.
 9. Responsive, accessibility, clean build.
 10. Deploy to Vercel.
 
-Current stage: **1**
+Update the marker below in the same commit that completes a stage. It exists
+to hold focus on one stage at a time, and it can only do that if it is true.
+It sat at stage 1 through nine finished stages because nobody maintained it,
+which made it worse than no marker at all — it actively misreported the state
+of the project to anyone who read it first.
+
+Current stage: **all ten complete.** Live at https://vitrine-store.vercel.app/
+
+The work that remains is not a stage: thirty of the thirty-six products still
+use `PLACEHOLDER_IMAGE`. Only audio has been photographed. See **Content and
+images** above and `docs/image-spec.md` before collecting more.

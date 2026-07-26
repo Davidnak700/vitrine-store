@@ -7,7 +7,7 @@ product comparison, search and a working basket.
 Built as a portfolio project, so the interesting part is not the shop — it is
 the decisions, and particularly the ones that were measured and then reversed.
 
-**Live:** _(link once deployed)_
+**Live:** https://vitrine-store.vercel.app/
 
 ## Stack
 
