@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/CartProvider";
 import { cartTotal, MAX_QUANTITY, resolveLines } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
@@ -17,6 +17,58 @@ import { formatPrice } from "@/lib/format";
  * so a basket saved weeks ago shows today's prices and quietly drops anything
  * that has since left the range.
  */
+/**
+ * Emptying the basket asks first, and it is the only control here that does.
+ *
+ * It is the one irreversible thing in the panel, it sits at the very bottom
+ * where a thumb naturally lands, and it measured 21px tall — the smallest
+ * target on a 375px screen, in the easiest place to hit by accident. Size
+ * alone would have made that worse rather than better: a bigger destructive
+ * button is a bigger accident. So it asks instead.
+ *
+ * The confirmation lives here rather than in CartDrawer so that closing the
+ * panel unmounts it and the half-finished question disappears on its own. Held
+ * in the parent it would need an effect to reset it, and resetting state from
+ * an effect is the cascading-render pattern the lint rule exists to catch.
+ */
+function ClearBasket({ onClear }: { onClear: () => void }) {
+  const [confirming, setConfirming] = useState(false);
+
+  if (!confirming) {
+    return (
+      <button
+        type="button"
+        onClick={() => setConfirming(true)}
+        className="mt-4 flex min-h-11 items-center rounded-sm text-small text-ink-muted transition-colors hover:text-accent"
+      >
+        Empty the basket
+      </button>
+    );
+  }
+
+  return (
+    <div className="mt-4 flex flex-wrap items-center gap-2">
+      <button
+        type="button"
+        onClick={onClear}
+        className="flex min-h-11 items-center rounded-pill bg-ink px-4 text-small font-medium text-surface-card transition-opacity hover:opacity-90"
+      >
+        Yes, empty it
+      </button>
+      {/* Focused on appearing, so the safe choice is the one already under the
+          keyboard, and a screen reader announces that something was asked. */}
+      <button
+        type="button"
+        autoFocus
+        onClick={() => setConfirming(false)}
+        className="flex min-h-11 items-center rounded-pill px-4 text-small text-ink-muted transition-colors hover:text-ink"
+      >
+        Keep it
+      </button>
+    </div>
+  );
+}
+
 export default function CartDrawer() {
   const { lines, isOpen, closeCart, setQuantity, remove, clear } = useCart();
   const panelRef = useRef<HTMLDivElement>(null);
@@ -139,11 +191,15 @@ export default function CartDrawer() {
                     {formatPrice(product.price)}
                   </p>
 
-                  <div className="mt-2 flex items-center gap-2">
+                  {/* Every control here is at least 44px in both directions.
+                      They were 32px steppers with a 21px Remove alongside them
+                      at the same height — three small targets in a cluster,
+                      which is a mis-tap waiting to happen on a phone. */}
+                  <div className="mt-2 flex items-center gap-1">
                     <button
                       type="button"
                       onClick={() => setQuantity(product.slug, quantity - 1)}
-                      className="flex size-8 items-center justify-center rounded-pill bg-surface-well text-ink transition-colors hover:bg-accent-tint hover:text-accent"
+                      className="flex size-11 items-center justify-center rounded-pill bg-surface-well text-ink transition-colors hover:bg-accent-tint hover:text-accent"
                     >
                       <span aria-hidden="true">&minus;</span>
                       <span className="sr-only">
@@ -151,7 +207,7 @@ export default function CartDrawer() {
                       </span>
                     </button>
 
-                    <span className="min-w-6 text-center text-small font-medium text-ink">
+                    <span className="min-w-8 text-center text-small font-medium text-ink">
                       <span className="sr-only">Quantity: </span>
                       {quantity}
                     </span>
@@ -160,7 +216,7 @@ export default function CartDrawer() {
                       type="button"
                       disabled={quantity >= MAX_QUANTITY}
                       onClick={() => setQuantity(product.slug, quantity + 1)}
-                      className="flex size-8 items-center justify-center rounded-pill bg-surface-well text-ink transition-colors hover:bg-accent-tint hover:text-accent disabled:opacity-40"
+                      className="flex size-11 items-center justify-center rounded-pill bg-surface-well text-ink transition-colors hover:bg-accent-tint hover:text-accent disabled:opacity-40"
                     >
                       <span aria-hidden="true">+</span>
                       <span className="sr-only">
@@ -171,7 +227,7 @@ export default function CartDrawer() {
                     <button
                       type="button"
                       onClick={() => remove(product.slug)}
-                      className="ml-auto rounded-sm text-small text-ink-muted transition-colors hover:text-accent"
+                      className="ml-auto flex min-h-11 items-center rounded-sm px-3 text-small text-ink-muted transition-colors hover:text-accent"
                     >
                       Remove
                       <span className="sr-only"> {product.name}</span>
@@ -196,15 +252,7 @@ export default function CartDrawer() {
             order can be placed.
           </p>
 
-          {resolved.length > 0 && (
-            <button
-              type="button"
-              onClick={clear}
-              className="mt-4 rounded-sm text-small text-ink-muted transition-colors hover:text-accent"
-            >
-              Empty the basket
-            </button>
-          )}
+          {resolved.length > 0 && <ClearBasket onClear={clear} />}
         </div>
       </div>
     </div>

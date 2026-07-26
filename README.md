@@ -154,6 +154,34 @@ retry.
 Photographs come from Unsplash and Pexels under their free licences, credited
 per product in `imageCredit`.
 
+## What a phone audit found
+
+The site was responsive from the start — it never scrolled sideways and it
+never broke. That is not the same as being designed for a phone, and the
+difference only showed up once it was measured at 375px rather than resized
+and eyeballed.
+
+| Measured at 375px | Finding |
+| --- | --- |
+| Comparison table | **640px wide in a 327px window.** Neither the label column nor the header row was pinned, so scrolling right lost the row labels and scrolling down lost the product names |
+| Category navigation | **Two of six categories off-screen.** "Smart Home" cut mid-word, "Accessories" entirely outside the viewport, behind a swipe with the scrollbar hidden and no snap |
+| Home page | **10.6 screens tall.** Each row of four products becomes four stacked cards; 2.4 screens of scrolling to get past the bestsellers |
+| Product page | Name at 0.74 screens down, Add to basket at 1.03 — both below the fold, behind the image |
+| Basket panel | All ten controls under 44px. The destructive one, "Empty the basket", was the smallest target on screen at 21px tall and sat 24px from the bottom edge, where a thumb lands |
+
+Two things the audit found already right, recorded so they don't get
+"improved": the basket becomes a genuine full-screen modal on a phone with
+body scroll locked, and no page scrolls sideways at any width.
+
+The navigation and the basket hazard were fixed first, because both were bugs
+rather than design questions — a category nobody can reach, and an
+irreversible action that was easiest to hit by accident. The comparison table
+is the real work and is being designed rather than patched, since pinning the
+header would leave the desktop layout in place with tape on it.
+
+The measuring is the part worth showing. Every number above came from the
+running site, not from reading the CSS.
+
 ## Accessibility
 
 Audited across every route rather than assumed: one `h1` per page, no skipped

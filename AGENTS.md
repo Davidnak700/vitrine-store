@@ -66,6 +66,18 @@ The catalogue is small enough that hiding categories behind a `Catalog`
 link would cost a click for nothing. Deals and About are not in the header;
 they live in the footer.
 
+**That argument is a desktop argument and does not hold at narrow widths.**
+The six pills need 487px; a 375px phone gives the row 327px. Scrolling the row
+sideways looked like it preserved "every category one tap away" and did not:
+measured at 375px, "Smart Home" was cut mid-word and "Accessories" was off the
+screen entirely, behind a swipe with no scrollbar, no snap and nothing to
+suggest it was there. Two of six categories were undiscoverable.
+
+The row now wraps to a second line instead. The rule to carry forward is that
+a flat navigation has to stay flat at every width — if the six ever stop
+fitting on two lines, that is the point to reconsider the structure, not to
+hide the overflow.
+
 Categories: laptops, phones, audio, TVs, smart home, accessories.
 6 products each, 36 in total.
 
