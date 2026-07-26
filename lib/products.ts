@@ -11,17 +11,39 @@ import type { Category } from "@/lib/categories";
  * Within a category every product carries the same set of spec labels, in the
  * same order, so the comparison table lines up row by row.
  *
- * Product imagery: photographs where we have them, otherwise the shared
- * placeholder. A photograph carries an `imageCredit`; the generated SVG
- * illustrations (kept as a fallback, see docs/image-spec.md) carry none.
- * Only audio is photographed so far.
+ * Product imagery: photographs and generated frames where we have them,
+ * otherwise the shared placeholder. Both kinds carry an `imageCredit`; the
+ * generated SVG illustrations (kept as a fallback, see docs/image-spec.md)
+ * carry none.
  */
 
-export type ImageCredit = {
-  photographer: string;
-  source: "Unsplash" | "Pexels";
-  url: string;
-};
+/**
+ * Where a picture came from. Two kinds, because the two have nothing in
+ * common: a photograph is owed to a person under a licence, and a generated
+ * frame is owed to a model at a seed.
+ *
+ * Tagged rather than inferred from which fields are present, so adding a
+ * third kind later cannot silently match one of these.
+ *
+ * The prompt is deliberately absent. It lives in DESCRIPTIONS in
+ * scripts/generate-images.ts, and copying it here would be two sources of
+ * truth for one string — the same fault as the basket badge that counted
+ * stored lines while the drawer counted matched ones. Model, seed and that
+ * script reproduce any frame exactly.
+ */
+export type ImageCredit =
+  | {
+      kind: "photograph";
+      photographer: string;
+      source: "Unsplash" | "Pexels";
+      url: string;
+    }
+  | {
+      kind: "generated";
+      /** Hub id of the model, e.g. 'Tongyi-MAI/Z-Image-Turbo'. */
+      model: string;
+      seed: number;
+    };
 
 export type Spec = {
   label: string;
@@ -349,6 +371,7 @@ export const products: Product[] = [
     bestseller: true,
     image: "/img/audio/halden-field-one.jpg",
     imageCredit: {
+      kind: "photograph",
       photographer: "Paul Seling",
       source: "Pexels",
       url: "https://www.pexels.com/photo/black-corded-headphones-12266869/",
@@ -377,6 +400,7 @@ export const products: Product[] = [
     bestseller: true,
     image: "/img/audio/nordvale-hush-pro.jpg",
     imageCredit: {
+      kind: "photograph",
       photographer: "Kedibone Isaac Makhumisane",
       source: "Unsplash",
       url: "https://unsplash.com/photos/a-pair-of-headphones-sitting-on-top-of-a-table-BprwjNPX2Vk",
@@ -404,6 +428,7 @@ export const products: Product[] = [
     bestseller: false,
     image: "/img/audio/kestrel-bud-2.jpg",
     imageCredit: {
+      kind: "photograph",
       photographer: "TheRegisti",
       source: "Unsplash",
       url: "https://unsplash.com/photos/black-and-blue-bluetooth-earbuds-qt9_OfTaaeY",
@@ -431,6 +456,7 @@ export const products: Product[] = [
     bestseller: false,
     image: "/img/audio/orla-loop.jpg",
     imageCredit: {
+      kind: "photograph",
       photographer: "wu yi",
       source: "Unsplash",
       url: "https://unsplash.com/photos/black-and-silver-bluetooth-earphones-Kmz5Is6-PgQ",
@@ -459,6 +485,7 @@ export const products: Product[] = [
     bestseller: false,
     image: "/img/audio/cairn-tumble.jpg",
     imageCredit: {
+      kind: "photograph",
       photographer: "Caleb Oquendo",
       source: "Pexels",
       url: "https://www.pexels.com/photo/speaker-in-white-background-7772558/",
@@ -486,6 +513,7 @@ export const products: Product[] = [
     bestseller: false,
     image: "/img/audio/vellum-shelf.jpg",
     imageCredit: {
+      kind: "photograph",
       photographer: "Rosen Genov",
       source: "Pexels",
       url: "https://www.pexels.com/photo/a-presonus-speaker-system-4295360/",
@@ -802,6 +830,7 @@ export const products: Product[] = [
     bestseller: false,
     image: "/img/accessories/ferrite-cord-2m.jpg",
     imageCredit: {
+      kind: "photograph",
       photographer: "ready made",
       source: "Pexels",
       url: "https://www.pexels.com/photo/close-up-photo-of-cord-3921633/",
@@ -830,6 +859,7 @@ export const products: Product[] = [
     bestseller: true,
     image: "/img/accessories/ferrite-brick-65.jpg",
     imageCredit: {
+      kind: "photograph",
       photographer: "I'm Zion",
       source: "Pexels",
       url: "https://www.pexels.com/photo/gallium-nitride-chargers-over-blue-surface-4865059/",
@@ -857,6 +887,7 @@ export const products: Product[] = [
     bestseller: false,
     image: "/img/accessories/vellum-rise.jpg",
     imageCredit: {
+      kind: "photograph",
       photographer: "Workperch",
       source: "Unsplash",
       url: "https://unsplash.com/photos/black-and-silver-laptop-computer-on-brown-wooden-table-iTUZ7VcJI8M",
@@ -885,6 +916,7 @@ export const products: Product[] = [
     bestseller: false,
     image: "/img/accessories/kestrel-glide.jpg",
     imageCredit: {
+      kind: "photograph",
       photographer: "Andrey Matveev",
       source: "Pexels",
       url: "https://www.pexels.com/photo/sleek-white-wireless-mouse-on-vibrant-yellow-32995421/",
@@ -912,6 +944,7 @@ export const products: Product[] = [
     bestseller: true,
     image: "/img/accessories/halden-press.jpg",
     imageCredit: {
+      kind: "photograph",
       photographer: "Clay Banks",
       source: "Unsplash",
       url: "https://unsplash.com/photos/silver-and-white-computer-keyboard-PXaQXThG1FY",
@@ -939,6 +972,7 @@ export const products: Product[] = [
     bestseller: false,
     image: "/img/accessories/sable-carry-14.jpg",
     imageCredit: {
+      kind: "photograph",
       photographer: "Lee Campbell",
       source: "Pexels",
       url: "https://www.pexels.com/photo/closed-grey-leather-case-89723/",

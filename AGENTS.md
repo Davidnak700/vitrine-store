@@ -247,6 +247,12 @@ depends on them: product imagery is photography from Unsplash and Pexels under
 their free licences, and a photograph of an invented product is a photograph of
 some real, branded thing.
 
+**`imageCredit` is stored but never rendered, and that is deliberate.** Neither
+the Unsplash nor the Pexels licence requires visible attribution, and the
+credit exists so provenance survives in the repository, not to put a byline on
+a shop page. It is not an oversight and does not need a component — do not
+"fix" it by adding one.
+
 That second point is why this section was rewritten. The rules used to live in
 both documents and drifted apart: this file forbade real trademarks outright
 while `image-spec.md` allowed visible brand marks. `image-spec.md` was the

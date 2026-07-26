@@ -90,6 +90,70 @@ this file allowed visible brand marks. Brand marks are allowed — that is
 settled, and measured. `AGENTS.md` now points here rather than repeating, so
 the two cannot disagree again.
 
+### Generated imagery: the risk is subject choice, not draughtsmanship
+
+Measured on the first smart-home pass with Z-Image-Turbo. It inverts the
+obvious prediction, so it is worth stating plainly before anyone writes another
+prompt.
+
+**The expected failure did not happen.** Small repeating geometry — the thing
+these models are supposed to garble — came out clean. The screw thread on
+`brisk-glow-a1` is correct, evenly pitched, and would survive the product
+page's 509px.
+
+**What failed was which object got rendered.** Two of the first three were
+competent photographs of the wrong thing:
+
+| Asked for | Got | Why |
+| --- | --- | --- |
+| a smart **plug adapter** with a button | the **wall socket**, two angled slots over a round hole | "socket" dominates the concept; the slot arrangement then reads as a face |
+| a motion **sensor** with one dark lens | a **security camera** | any lens on a small white box pulls the model to camera |
+
+So when writing a description, spend the words on **identity, not finish**.
+Say which side faces the viewer, say how many of a thing there are, and say
+outright what the object is *not* — `not a wall socket, no socket holes`,
+`no lens, no camera, no glass`. Adjectives about materials and lighting are
+nearly free; the model already handles those. Naming a feature that belongs to
+a neighbouring product category is what costs a regeneration.
+
+A second, cheaper lesson: a description that is accurate but generic will
+collide with another product's silhouette. The camera-shaped sensor would have
+duplicated `orla-chime`, the video doorbell, in the same grid.
+
+**Do not prompt with negations — they fail in both directions.** Measured on
+the second smart-home pass, where both fixes were written as prohibitions and
+both misfired:
+
+| Prompt said | Result |
+| --- | --- |
+| "not a wall socket, no socket holes or slots anywhere" | socket holes again, now with a single pin beside them — anatomically incoherent |
+| "no lens, no camera, no glass, no aperture" | every feature suppressed; a blank white wedge that could be a bin |
+
+Naming a thing to forbid it keeps that word in the prompt and the model draws
+it. Piling on prohibitions instead strips the object of the features that made
+it recognisable. **Describe only what is present**: `two flat rectangular metal
+prongs standing proud of its front face`, not `not a socket`. Give the object
+the one part that identifies it and stop.
+
+### What the free ZeroGPU quota actually buys
+
+**Six generations per day.** Measured, not estimated, and it settles a question
+worth recording because the arithmetic is counter-intuitive.
+
+Each job **requests 60 seconds** of GPU time. Actual generation takes **6.3 to
+7.2 seconds** at 8 steps and 1152x864. The quota is charged against the
+**request, not the work** — six jobs exhausted a daily allowance that would
+have covered forty at the true rate. The error is explicit: `60s requested vs.
+0s left`.
+
+The 60s figure is set by `@spaces.GPU(duration=...)` inside the Space and
+cannot be lowered by the caller. The lever, if this becomes the bottleneck, is
+to duplicate the Space and shorten that duration — free accounts may host two
+ZeroGPU Spaces. Cutting it to 20s would roughly triple the daily count for
+nothing. Untried so far.
+
+Quota resets 24 hours after first use.
+
 ### What the search actually costs, per category
 
 Measured while collecting accessories. Both of these look like a searching

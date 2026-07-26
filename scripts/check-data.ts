@@ -83,19 +83,33 @@ check(
       p.image === `/img/${p.category}/${p.slug}.svg`,
   ),
 );
+// Two kinds of credit, checked separately. A missing credit and a credit
+// missing its own fields are different faults, and reporting them as one line
+// would say "imagery is wrong" without saying which picture or what about it.
 check(
-  "every photograph carries a full credit",
+  "every raster image carries a credit of some kind",
+  products.every((p) => !p.image.endsWith(".jpg") || p.imageCredit !== null),
+);
+check(
+  "photograph credits name a photographer, a licensed source and a page",
   products.every(
     (p) =>
-      !p.image.endsWith(".jpg") ||
-      (p.imageCredit !== null &&
-        !!p.imageCredit.photographer &&
+      p.imageCredit?.kind !== "photograph" ||
+      (!!p.imageCredit.photographer &&
         !!p.imageCredit.url &&
         (p.imageCredit.source === "Unsplash" || p.imageCredit.source === "Pexels")),
   ),
 );
 check(
-  "nothing but a photograph claims a credit",
+  "generated credits name a model and a seed",
+  products.every(
+    (p) =>
+      p.imageCredit?.kind !== "generated" ||
+      (!!p.imageCredit.model && Number.isInteger(p.imageCredit.seed)),
+  ),
+);
+check(
+  "nothing without its own image claims a credit",
   products.every((p) => p.image.endsWith(".jpg") || p.imageCredit === null),
 );
 
