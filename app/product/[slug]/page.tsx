@@ -7,7 +7,7 @@ import PriceTag from "@/components/PriceTag";
 import SpecTable from "@/components/SpecTable";
 import { getCategory } from "@/lib/categories";
 import { compareHref } from "@/lib/compare";
-import { formatSaving } from "@/lib/format";
+import { formatSaving, productImageAlt } from "@/lib/format";
 import { getProduct, products } from "@/lib/products";
 
 type Params = { params: Promise<{ slug: string }> };
@@ -49,7 +49,7 @@ export default async function ProductPage({ params }: Params) {
         <div className="rounded-xl bg-surface-well p-8 md:p-12">
           <Image
             src={product.image}
-            alt={`Illustration of the ${product.name}`}
+            alt={productImageAlt(product)}
             width={400}
             height={300}
             className="h-auto w-full"

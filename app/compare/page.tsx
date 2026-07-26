@@ -5,6 +5,7 @@ import CompareBar from "@/components/CompareBar";
 import PriceTag from "@/components/PriceTag";
 import { categories, getCategory, isCategory } from "@/lib/categories";
 import { hrefWith, hrefWithout, MAX_COMPARE, parseItems } from "@/lib/compare";
+import { productImageAlt } from "@/lib/format";
 import { getProductsByCategory } from "@/lib/products";
 
 export const metadata: Metadata = {
@@ -120,7 +121,7 @@ export default async function ComparePage({ searchParams }: Search) {
                         <span className="block rounded-xl bg-surface-well p-3">
                           <Image
                             src={product.image}
-                            alt={`Illustration of the ${product.name}`}
+                            alt={productImageAlt(product)}
                             width={400}
                             height={300}
                             sizes="200px"

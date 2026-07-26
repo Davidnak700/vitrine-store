@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import PriceTag from "@/components/PriceTag";
 import { toggleHref } from "@/lib/compare";
-import { formatSaving } from "@/lib/format";
+import { formatSaving, productImageAlt } from "@/lib/format";
 import type { Product } from "@/lib/products";
 
 export type CompareContext = {
@@ -52,7 +52,7 @@ export default function ProductCard({
         <div className="relative rounded-xl bg-surface-well p-4">
           <Image
             src={product.image}
-            alt={`Illustration of the ${product.name}`}
+            alt={productImageAlt(product)}
             width={400}
             height={300}
             className="h-auto w-full"

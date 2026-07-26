@@ -1,7 +1,7 @@
 # Product imagery
 
 Audio ships **photographs**. The other five categories still show the shared
-placeholder until stage 9.
+placeholder.
 
 A parallel system of flat SVG illustrations is kept in the repository as a
 working fallback — see [Illustration fallback](#illustration-fallback) below.
@@ -184,7 +184,15 @@ strokes merges elements that should stay separate.
 | smart-home | placeholder | — |
 | accessories | placeholder | — |
 
-The remaining thirty images are sourced in **stage 9**, deliberately last: an
-unbuilt basket costs a portfolio more than uneven photography does.
+The remaining thirty images are **not tied to a stage**. All ten stages are
+finished and the site is live; collecting them is ongoing work that runs after
+launch, one category at a time.
+
+This file used to say they were sourced in stage 9. That was wrong twice over:
+the stage list in `AGENTS.md` never put imagery in stage 9 — that stage was
+responsive, accessibility and a clean build — and stage 9 shipped without a
+single new photograph. Deferring them was still the right call, because an
+unbuilt basket costs a portfolio more than uneven photography does. Tying that
+decision to a stage number is what did not survive contact with the work.
 
 Products without their own image point at `/img/placeholder.svg`.
