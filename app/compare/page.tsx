@@ -100,8 +100,11 @@ export default async function ComparePage({ searchParams }: Search) {
       {products.length >= 2 && (
         <section className="mt-12">
           <h2 className="sr-only">Comparison</h2>
-          {/* Wide content scrolls inside its own box; the page never does. */}
-          <div className="overflow-x-auto">
+
+          {/* Below md the table is replaced outright, not adapted. See the
+              block view underneath for why. The table needs 640px and a phone
+              gives it 327px, so it appears only where it fits. */}
+          <div className="hidden overflow-x-auto md:block">
             <table className="w-full min-w-[640px] border-collapse text-left">
               <caption className="sr-only">
                 {products.map((p) => p.name).join(" compared with ")}
@@ -177,6 +180,88 @@ export default async function ComparePage({ searchParams }: Search) {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* The phone comparison: one specification per block, every product
+              listed down it.
+
+              The table was not shrunk to get here, it was transposed. Four
+              products will not fit across 375px as columns and no amount of
+              pinning changes that — the old layout showed the labels plus one
+              product at a time, which is the opposite of a comparison. Stacked
+              as rows they fit, so the axis that scrolls becomes the one a
+              phone scrolls anyway, and every value on screen stays next to
+              both the specification it belongs to and the product it belongs
+              to.
+
+              Its known weakness is that one product's spec sheet is now spread
+              across several blocks, so each product name is a link to its own
+              page — that is the way out of the scatter. */}
+          <div className="md:hidden">
+            <h3 className="sr-only">Products being compared</h3>
+            <ul className="flex flex-col gap-3">
+              {products.map((product) => (
+                <li key={product.slug} className="flex items-center gap-3">
+                  <span className="size-14 shrink-0 rounded-md bg-surface-well p-1.5">
+                    <Image
+                      src={product.image}
+                      alt=""
+                      width={400}
+                      height={300}
+                      sizes="56px"
+                      className="h-auto w-full"
+                      unoptimized={product.image.endsWith(".svg")}
+                    />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <Link
+                      href={`/product/${product.slug}`}
+                      className="flex min-h-11 items-center text-small font-medium text-ink"
+                    >
+                      {product.name}
+                    </Link>
+                    <PriceTag product={product} />
+                  </span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-8 flex flex-col gap-6">
+              {["Availability", ...labels].map((label) => (
+                <section key={label}>
+                  <h3 className="text-label font-semibold uppercase text-ink-muted">
+                    {label}
+                  </h3>
+                  {/* A definition list, because that is what this is: the
+                      product names the value, the value describes it.
+
+                      Rows are separated by alternating surface, the same way
+                      the desktop table stripes them, rather than by rules —
+                      there are no borders anywhere in the resting state. */}
+                  <dl className="mt-2 overflow-hidden rounded-lg">
+                    {products.map((product, index) => (
+                      <div
+                        key={product.slug}
+                        className={`flex items-baseline justify-between gap-4 px-4 py-3 ${
+                          index % 2 === 0 ? "bg-surface-card" : "bg-surface-well"
+                        }`}
+                      >
+                        <dt className="min-w-0 flex-1 text-small text-ink-muted">
+                          {product.name}
+                        </dt>
+                        <dd className="text-small font-medium text-ink">
+                          {label === "Availability"
+                            ? product.inStock
+                              ? "In stock"
+                              : "Out of stock"
+                            : valueFor(product.slug, label)}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </section>
+              ))}
+            </div>
           </div>
         </section>
       )}

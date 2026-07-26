@@ -140,7 +140,7 @@ export default function CartDrawer() {
           <button
             type="button"
             onClick={closeCart}
-            className="flex size-10 items-center justify-center rounded-pill bg-surface-well text-ink transition-colors hover:bg-accent-tint hover:text-accent"
+            className="flex size-11 items-center justify-center rounded-pill bg-surface-well text-ink transition-colors hover:bg-accent-tint hover:text-accent"
           >
             <span aria-hidden="true" className="text-body">
               &times;
@@ -183,7 +183,7 @@ export default function CartDrawer() {
                   <Link
                     href={`/product/${product.slug}`}
                     onClick={closeCart}
-                    className="rounded-sm text-small font-medium text-ink transition-colors hover:text-accent"
+                    className="flex min-h-11 items-center rounded-sm text-small font-medium text-ink transition-colors hover:text-accent"
                   >
                     {product.name}
                   </Link>

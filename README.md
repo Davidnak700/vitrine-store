@@ -175,9 +175,33 @@ body scroll locked, and no page scrolls sideways at any width.
 
 The navigation and the basket hazard were fixed first, because both were bugs
 rather than design questions — a category nobody can reach, and an
-irreversible action that was easiest to hit by accident. The comparison table
-is the real work and is being designed rather than patched, since pinning the
-header would leave the desktop layout in place with tape on it.
+irreversible action that was easiest to hit by accident.
+
+### The comparison table was transposed, not shrunk
+
+Pinning the label column and the header row was the obvious fix and the wrong
+one. It would have left the desktop layout in place with tape on it, and it
+does not touch the actual problem: four products will not fit across 375px as
+columns, so the page showed the labels and one product at a time — the
+opposite of a comparison.
+
+Below `md` the table is replaced by one block per specification, with all four
+products listed down it. Stacked as rows they fit, the axis that scrolls
+becomes the one a phone scrolls anyway, and every value on screen sits next to
+both the specification it belongs to and the product it belongs to. Its known
+weakness is that a single product's spec sheet is now spread across seven
+blocks, so each product name links to its own page. Desktop is untouched above
+the breakpoint.
+
+**The rejected alternative is the more interesting one.** A card per product
+with the differing values highlighted is the better-looking design, the more
+phone-native one, and the one that answers the question people actually bring
+to a comparison — what is different? It was rejected on the data. Within a
+category these products share specification *labels* but almost never share
+*values*: compare four laptops and every row differs on all four, so the
+highlighting marks everything and distinguishes nothing. A feature whose value
+evaporates against the real catalogue is the wrong choice however well it
+demonstrates.
 
 The measuring is the part worth showing. Every number above came from the
 running site, not from reading the CSS.
