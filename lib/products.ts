@@ -24,10 +24,10 @@ import type { Category } from "@/lib/categories";
  * Tagged rather than inferred from which fields are present, so adding a
  * third kind later cannot silently match one of these.
  *
- * The prompt is deliberately absent. It lives in DESCRIPTIONS in
- * scripts/generate-images.ts, and copying it here would be two sources of
- * truth for one string — the same fault as the basket badge that counted
- * stored lines while the drawer counted matched ones.
+ * The prompt is deliberately absent. The template lives in docs/image-spec.md,
+ * and copying it here would be two sources of truth for one string — the same
+ * fault as the basket badge that counted stored lines while the drawer counted
+ * matched ones.
  */
 export type ImageCredit =
   | {

@@ -115,12 +115,28 @@ type Product = {
 ```
 
 ```ts
-type ImageCredit = {
-  photographer: string
-  source: 'Unsplash' | 'Pexels'
-  url: string
-}
+type ImageCredit =
+  | {
+      kind: 'photograph'
+      photographer: string
+      source: 'Unsplash' | 'Pexels'
+      url: string
+    }
+  | {
+      kind: 'generated'
+      model: string
+      seed?: number      // absent for the shipping set — see below
+    }
 ```
+
+Two kinds, because the two owe different things to different parties: a
+photograph is owed to a person under a licence, a generated frame to a model at
+a seed. It is tagged rather than inferred from which fields are present, so a
+third kind added later cannot silently match one of these.
+
+All thirty-six products currently carry a `generated` credit. The `photograph`
+arm records a route that was tried and abandoned; it stays in the type because
+the two attempts are part of the history, not because anything uses it.
 
 Store only what can't be derived. No `isNew` or `isSale` fields.
 
@@ -154,21 +170,28 @@ app/
   search/page.tsx             — search results, query read from ?q=
   about/page.tsx
 components/
-  Header.tsx  Footer.tsx  Nav.tsx
+  Header.tsx  Footer.tsx  Nav.tsx  PromoBar.tsx
   ProductCard.tsx  ProductGrid.tsx  CategoryFilter.tsx
-  SpecTable.tsx  CompareBar.tsx  PriceTag.tsx
-  CartButton.tsx  CartDrawer.tsx  SearchBar.tsx
+  SpecTable.tsx  CompareBar.tsx  PriceTag.tsx  SearchBar.tsx
+  CartProvider.tsx  CartButton.tsx  CartDrawer.tsx  AddToCart.tsx
+                              — those four are the client components
 lib/
   products.ts  categories.ts  cart.ts  compare.ts  format.ts
 public/img/                   — product images as served, by category
-assets/photos/                — untouched photograph originals, by category
+assets/photos/                — image originals, by category, gitignored.
+                                Named for the photographs it first held; it
+                                now holds the generated frames the shipping
+                                set was placed from.
 scripts/
-  prepare-images.ts           — crops originals to 4:3 (npm run images:prepare)
   check-data.ts               — validates the catalogue (npm run check:data)
+  place-images.ts             — maps a folder of originals onto product slugs
+                                (npm run images:place, dry run without --go)
+  prepare-images.ts           — crops originals to 4:3 (npm run images:prepare)
   product-art.mjs             — illustration fallback (npm run art)
   measure-art.mjs             — measures illustrations (npm run check:art)
 docs/
   image-spec.md               — imagery decisions, and what has been ruled out
+README.md                     — what the project is, and every npm script
 ```
 
 ## React rules

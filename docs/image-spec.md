@@ -142,6 +142,30 @@ A second, cheaper lesson: a description that is accurate but generic will
 collide with another product's silhouette. The camera-shaped sensor would have
 duplicated `orla-chime`, the video doorbell, in the same grid.
 
+### The prompt template
+
+One template for all thirty-six, with only the description varying. Everything
+else — the lighting, the backdrop, the exclusions — is held constant, which is
+what lets the frames sit in one grid without one of them looking like it came
+from somewhere else.
+
+```
+Product photograph of <description>. Studio lighting, seamless very light grey
+background, product centred, fully visible with generous margin, subtle soft
+shadow beneath. No logos, no text, no branding. No hands, no people, no props.
+Photorealistic commercial product shot.
+```
+
+It is written out here because there is no longer a script holding it. The
+shipping set was generated interactively with `nano-banana-2`, so nothing in
+the repository reproduces it — which is also why the credits carry no seed.
+
+Note the tension between the template and the rule below: the template spends
+three clauses on prohibitions. Those are exclusions of whole categories of
+picture — people, props, text — which the models do honour. The rule is about
+the *description*, where a prohibition names the very object you are trying to
+avoid. Do not read the template as licence to write descriptions the same way.
+
 ### The rule: describe only what is present
 
 **Never write a prompt as a prohibition. Say what the object has, give it one
@@ -349,10 +373,21 @@ None. All six categories carry a full set of six generated frames, and no
 product is left on `/img/placeholder.svg`. The placeholder file and the
 `PLACEHOLDER_IMAGE` constant stay for any product added later.
 
-If a frame ever needs replacing, regenerate it from the description in
-`DESCRIPTIONS` and drop it in as `public/img/<category>/<slug>.png`. It will
-not match its neighbours' seed — none of them have one — but it will match
-their lighting and backdrop, which is the part that shows.
+If a frame ever needs replacing, write a fresh description under
+[The rule](#the-rule-describe-only-what-is-present), put it through
+[The prompt template](#the-prompt-template), and drop the result in as
+`public/img/<category>/<slug>.png`. It will not match its neighbours' seed —
+none of them have one — but it will match their lighting and backdrop, which is
+the part that shows.
+
+This used to say "regenerate it from the description in `DESCRIPTIONS`". That
+table lived in `scripts/generate-images.ts`, which drove Z-Image-Turbo through
+a Gradio Space at six images a day. The shipping set was made interactively
+with a different model, so the script never produced anything that is still on
+the site, and it has been deleted along with its `@gradio/client` dependency.
+Its twenty-four descriptions went with it: they were written for a model the
+project no longer uses and covered two thirds of the catalogue, while the
+reasoning that produced them is set out in full above.
 
 This file used to say they were sourced in stage 9. That was wrong twice over:
 the stage list in `AGENTS.md` never put imagery in stage 9 — that stage was
