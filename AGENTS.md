@@ -255,15 +255,20 @@ Deals and About sit here because they were dropped from the header.
 changing anything about images. The rules are not repeated here.
 
 Only two facts about imagery belong in this file, because the rest of it
-depends on them: product imagery is photography from Unsplash and Pexels under
-their free licences, and a photograph of an invented product is a photograph of
-some real, branded thing.
+depends on them.
 
-**`imageCredit` is stored but never rendered, and that is deliberate.** Neither
-the Unsplash nor the Pexels licence requires visible attribution, and the
-credit exists so provenance survives in the repository, not to put a byline on
-a shop page. It is not an oversight and does not need a component — do not
-"fix" it by adding one.
+**All 36 product images are generated, from one model and one prompt
+template.** Stock photography was tried three times and abandoned: a
+photograph of an invented product is a photograph of some real, branded thing,
+and twelve sources give twelve backgrounds that no processing afterwards can
+reconcile. Do not reintroduce it.
+
+**`imageCredit` is stored but never rendered, and that is deliberate.** It
+records provenance in the repository rather than putting a byline on a shop
+page. It is not an oversight and does not need a component — do not "fix" it
+by adding one. A generated credit names the model; the seed is optional and
+absent for the shipping set, which was produced interactively and returns
+none.
 
 That second point is why this section was rewritten. The rules used to live in
 both documents and drifted apart: this file forbade real trademarks outright
@@ -440,6 +445,6 @@ of the project to anyone who read it first.
 
 Current stage: **all ten complete.** Live at https://vitrine-store.vercel.app/
 
-The work that remains is not a stage: twenty-four of the thirty-six products
-still use `PLACEHOLDER_IMAGE`. Audio and accessories have been photographed.
-Read `docs/image-spec.md` before collecting more.
+Imagery is finished too: all thirty-six products carry their own generated
+frame, and none is left on `PLACEHOLDER_IMAGE`. The placeholder file and the
+constant stay as the fallback for any product added later.

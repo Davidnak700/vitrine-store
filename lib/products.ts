@@ -11,10 +11,9 @@ import type { Category } from "@/lib/categories";
  * Within a category every product carries the same set of spec labels, in the
  * same order, so the comparison table lines up row by row.
  *
- * Product imagery: photographs and generated frames where we have them,
- * otherwise the shared placeholder. Both kinds carry an `imageCredit`; the
- * generated SVG illustrations (kept as a fallback, see docs/image-spec.md)
- * carry none.
+ * Product imagery: all 36 frames are generated, from one model and one prompt
+ * template, which is what finally made the catalogue look like one shop. See
+ * docs/image-spec.md for the four attempts it took to get there.
  */
 
 /**
@@ -28,8 +27,7 @@ import type { Category } from "@/lib/categories";
  * The prompt is deliberately absent. It lives in DESCRIPTIONS in
  * scripts/generate-images.ts, and copying it here would be two sources of
  * truth for one string — the same fault as the basket badge that counted
- * stored lines while the drawer counted matched ones. Model, seed and that
- * script reproduce any frame exactly.
+ * stored lines while the drawer counted matched ones.
  */
 export type ImageCredit =
   | {
@@ -40,9 +38,18 @@ export type ImageCredit =
     }
   | {
       kind: "generated";
-      /** Hub id of the model, e.g. 'Tongyi-MAI/Z-Image-Turbo'. */
+      /** The model that drew it, e.g. 'nano-banana-2'. */
       model: string;
-      seed: number;
+      /**
+       * Optional, and absent for the set that ships.
+       *
+       * A seed is only worth recording when a script submitted the job and
+       * could submit it again. The shipping frames were generated
+       * interactively in a chat client, which returns no seed, so there is
+       * nothing truthful to put here. Recording a seed that does not
+       * reproduce the image would be worse than recording none.
+       */
+      seed?: number;
     };
 
 export type Spec = {
@@ -84,8 +91,8 @@ export const products: Product[] = [
     oldPrice: 1249,
     addedAt: "2026-02-11",
     bestseller: true,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/laptops/halden-slate-14.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "Light enough to forget you packed it, quick enough for a full working day.",
     description:
       "The Slate is the one we hand to people who say they just want a laptop that works. It is thin, it stays silent, and the battery genuinely lasts a working day rather than a marketing day. If you write, browse and sit in meetings, you will never find its limit.",
@@ -107,8 +114,8 @@ export const products: Product[] = [
     price: 899,
     addedAt: "2026-05-02",
     bestseller: true,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/laptops/nordvale-drift-13.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "Our smallest laptop, and the one that travels best.",
     description:
       "A little over a kilogram, so it disappears into a bag you were already carrying. The Drift is built for people who work in short bursts in different places rather than at one desk. It is not the fastest machine here, and it does not need to be.",
@@ -130,8 +137,8 @@ export const products: Product[] = [
     price: 1899,
     addedAt: "2025-11-14",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/laptops/kestrel-forge-16.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "For editing, rendering and anything that makes other laptops struggle.",
     description:
       "The Forge is heavy, and that is the point: there is room inside for cooling, so it keeps running at full speed instead of slowing down after ten minutes. Buy it if you edit video or work with large files. If you mostly use a browser, buy something lighter.",
@@ -154,8 +161,8 @@ export const products: Product[] = [
     oldPrice: 1449,
     addedAt: "2025-09-30",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/laptops/cairn-field-15.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "Built to survive being carried badly.",
     description:
       "A reinforced case, a spill-resistant keyboard and hinges rated for years of opening and closing. The Field is chunkier than the rest of the shelf because everything inside it is braced. It suits anyone whose laptop lives in a rucksack rather than a sleeve.",
@@ -177,8 +184,8 @@ export const products: Product[] = [
     price: 549,
     addedAt: "2026-06-20",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/laptops/tolvan-loom-14.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "The sensible first laptop, without the usual compromises.",
     description:
       "Cheap laptops usually cut the screen or the keyboard. The Loom cuts neither, and saves money on the case and the processor instead. It handles coursework, email and a dozen browser tabs without complaint, and it is the machine we recommend to students.",
@@ -200,8 +207,8 @@ export const products: Product[] = [
     price: 1149,
     addedAt: "2026-07-08",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/laptops/vellum-arc-13.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "Folds flat into a tablet when you would rather draw than type.",
     description:
       "The hinge turns all the way back, so the Arc works as a laptop, a tablet or a small easel propped on a table. The screen takes pen input. It is a genuinely useful shape for sketching and marking up documents, and an ordinary good laptop the rest of the time.",
@@ -227,8 +234,8 @@ export const products: Product[] = [
     oldPrice: 899,
     addedAt: "2026-03-05",
     bestseller: true,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/phones/orla-pulse-7.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "The all-rounder most people should buy and then stop thinking about.",
     description:
       "Good camera, good screen, and a battery that reaches bedtime with something left. The Pulse does not lead on any single measure, which is exactly why it is our most popular phone. Nothing about it will annoy you in two years.",
@@ -250,8 +257,8 @@ export const products: Product[] = [
     price: 649,
     addedAt: "2026-01-19",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/phones/halden-ridge-5.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "A big battery in a phone that is otherwise unremarkable, on purpose.",
     description:
       "The Ridge exists for people who resent charging their phone. Two days of ordinary use is normal, three if you are careful. Everything else about it is competent rather than exciting, and it costs less because of that.",
@@ -273,8 +280,8 @@ export const products: Product[] = [
     price: 1099,
     addedAt: "2025-10-22",
     bestseller: true,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/phones/kestrel-vega-x.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "The best camera we sell, in the phone we sell the most of to photographers.",
     description:
       "Three lenses that actually behave like three lenses, rather than one good one and two apologies. Low light is where the difference shows. It is expensive, and if you do not photograph much, the Pulse will make you just as happy for less.",
@@ -296,8 +303,8 @@ export const products: Product[] = [
     price: 329,
     addedAt: "2026-06-30",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/phones/tolvan-note-4.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "Everything a phone needs and nothing it does not, at a third of the price.",
     description:
       "Calls, messages, maps, photos and a full day of battery. The screen is a step down from the phones above and the camera struggles at night, and those are the only two places you will notice the price. A good first phone or a good spare.",
@@ -320,8 +327,8 @@ export const products: Product[] = [
     oldPrice: 529,
     addedAt: "2025-12-03",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/phones/brisk-ember-3.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "Small enough to use one-handed, which almost nothing is any more.",
     description:
       "Phones grew and never stopped. The Ember is deliberately narrow, so your thumb reaches the far corner of the screen. The trade is a smaller battery, and you will charge it every night. Plenty of people take that deal happily.",
@@ -343,8 +350,8 @@ export const products: Product[] = [
     price: 899,
     addedAt: "2026-07-14",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/phones/sable-quill-2.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "The thinnest phone on the shelf, without a hollow feel.",
     description:
       "Thin phones usually give up battery or creak when you hold them. The Quill does neither, because the frame is a single piece of metal rather than a shell around a chassis. It is a nice object, and it costs a little more for that reason.",
@@ -369,13 +376,8 @@ export const products: Product[] = [
     price: 249,
     addedAt: "2026-04-16",
     bestseller: true,
-    image: "/img/audio/halden-field-one.jpg",
-    imageCredit: {
-      kind: "photograph",
-      photographer: "Paul Seling",
-      source: "Pexels",
-      url: "https://www.pexels.com/photo/black-corded-headphones-12266869/",
-    },
+    image: "/img/audio/halden-field-one.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "Comfortable for a whole working day, which matters more than it sounds.",
     description:
       "Most headphones are judged on the first ten minutes. The Field One is built for hour six: light clamp, breathable pads, and no hot spot on the top of your head. The sound is even and unexaggerated, so voices and music both come out right.",
@@ -398,13 +400,8 @@ export const products: Product[] = [
     oldPrice: 429,
     addedAt: "2025-11-28",
     bestseller: true,
-    image: "/img/audio/nordvale-hush-pro.jpg",
-    imageCredit: {
-      kind: "photograph",
-      photographer: "Kedibone Isaac Makhumisane",
-      source: "Unsplash",
-      url: "https://unsplash.com/photos/a-pair-of-headphones-sitting-on-top-of-a-table-BprwjNPX2Vk",
-    },
+    image: "/img/audio/nordvale-hush-pro.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "Turns a train carriage into a quiet room.",
     description:
       "The noise cancelling is the reason to buy these, and it is genuinely a class above the rest of the shelf on steady sounds: engines, air conditioning, road noise. Voices still get through, which is deliberate. If you fly or commute often, this is the pair.",
@@ -426,13 +423,8 @@ export const products: Product[] = [
     price: 129,
     addedAt: "2026-06-11",
     bestseller: false,
-    image: "/img/audio/kestrel-bud-2.jpg",
-    imageCredit: {
-      kind: "photograph",
-      photographer: "TheRegisti",
-      source: "Unsplash",
-      url: "https://unsplash.com/photos/black-and-blue-bluetooth-earbuds-qt9_OfTaaeY",
-    },
+    image: "/img/audio/kestrel-bud-2.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "Small, sealed earbuds that stay put when you run.",
     description:
       "Four sizes of tip in the box, because the fit is the whole product with earbuds. Get it right and they seal, stay in and sound full. The case gives you three extra charges, so a week of commuting between wall sockets is normal.",
@@ -454,13 +446,8 @@ export const products: Product[] = [
     price: 159,
     addedAt: "2026-07-02",
     bestseller: false,
-    image: "/img/audio/orla-loop.jpg",
-    imageCredit: {
-      kind: "photograph",
-      photographer: "wu yi",
-      source: "Unsplash",
-      url: "https://unsplash.com/photos/black-and-silver-bluetooth-earphones-Kmz5Is6-PgQ",
-    },
+    image: "/img/audio/orla-loop.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "Hooks over the ear and stays there. Nothing to charge, ever.",
     description:
       "A wire is not a compromise here, it is the point: no battery, no pairing, no flat pair of earphones at the worst moment. The hooks sit over the top of your ear rather than wedging into the canal, so you can wear them for hours and still hear a car coming. Bass is lighter than a sealed bud, and that is the trade you are making.",
@@ -483,13 +470,8 @@ export const products: Product[] = [
     oldPrice: 129,
     addedAt: "2026-02-24",
     bestseller: false,
-    image: "/img/audio/cairn-tumble.jpg",
-    imageCredit: {
-      kind: "photograph",
-      photographer: "Caleb Oquendo",
-      source: "Pexels",
-      url: "https://www.pexels.com/photo/speaker-in-white-background-7772558/",
-    },
+    image: "/img/audio/cairn-tumble.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "A speaker you can leave outside and stop worrying about.",
     description:
       "Sealed against rain and dust, and it survives being knocked off a table, which is how most portable speakers die. It is loud enough for a kitchen or a small garden and honest about not being loud enough for a party.",
@@ -511,13 +493,8 @@ export const products: Product[] = [
     price: 299,
     addedAt: "2025-09-12",
     bestseller: false,
-    image: "/img/audio/vellum-shelf.jpg",
-    imageCredit: {
-      kind: "photograph",
-      photographer: "Rosen Genov",
-      source: "Pexels",
-      url: "https://www.pexels.com/photo/a-presonus-speaker-system-4295360/",
-    },
+    image: "/img/audio/vellum-shelf.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "A proper pair of speakers for a desk, not a single box pretending.",
     description:
       "Two speakers a metre apart give you a stereo image that no single unit can fake — instruments sit in different places instead of piling into the middle. They plug into the mains and stay where you put them. For a desk or a small sitting room, this is the upgrade that people actually hear.",
@@ -542,8 +519,8 @@ export const products: Product[] = [
     price: 429,
     addedAt: "2026-01-08",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/tvs/nordvale-vista-43.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "The right size for a bedroom or a small sitting room.",
     description:
       "Forty-three inches is as large as most rooms want, whatever the shop floor suggests. The Vista is bright enough for a room with windows and its menus are quick, which is rarer than it should be at this price.",
@@ -566,8 +543,8 @@ export const products: Product[] = [
     oldPrice: 699,
     addedAt: "2026-03-19",
     bestseller: true,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/tvs/halden-pane-50.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "Our most-bought television, and the easiest one to recommend.",
     description:
       "Fifty inches, a bright panel and a picture that needs no adjusting out of the box. The Pane is the television we suggest when someone has not thought about televisions in eight years and does not want to start now.",
@@ -589,8 +566,8 @@ export const products: Product[] = [
     price: 899,
     addedAt: "2025-10-05",
     bestseller: true,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/tvs/kestrel-lumen-55.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "Deep blacks that survive a dark room, which cheaper sets cannot manage.",
     description:
       "In a lit room, most televisions look similar. Turn the lights off and the difference appears: the Lumen holds true black instead of a grey glow, so night scenes stay readable. Worth the money if you watch films properly, wasted if the television is background noise.",
@@ -613,8 +590,8 @@ export const products: Product[] = [
     oldPrice: 1399,
     addedAt: "2026-05-21",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/tvs/cairn-broad-65.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "Large, bright, and happy in a room full of daylight.",
     description:
       "Sixty-five inches needs about three metres of viewing distance to be comfortable — measure before you buy. Given that room, the Broad is excellent: very bright, so sunshine on the screen does not wash the picture out, and even across the whole panel.",
@@ -636,8 +613,8 @@ export const products: Product[] = [
     price: 249,
     addedAt: "2026-07-11",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/tvs/tolvan-frame-32.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "A small second television for a kitchen or a spare room.",
     description:
       "Thirty-two inches, light enough for one person to mount, and cheap enough that putting one in a kitchen is not extravagant. The picture is fine at close range. Do not buy it as a main television.",
@@ -659,8 +636,8 @@ export const products: Product[] = [
     price: 1799,
     addedAt: "2026-06-25",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/tvs/sable-reel-75.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "The biggest set we stock. Measure your wall first.",
     description:
       "Seventy-five inches is a piece of furniture, not an appliance, and it wants four metres of distance and two people to lift it. If your room can take it, the effect is genuinely different from a smaller screen. If it cannot, the Broad will make you happier.",
@@ -685,8 +662,8 @@ export const products: Product[] = [
     price: 19,
     addedAt: "2026-04-02",
     bestseller: true,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/smart-home/brisk-glow-a1.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "The cheapest way to find out whether you like smart lighting.",
     description:
       "Screws into an ordinary fitting and joins your wi-fi in about a minute, with no hub to buy first. Dim it, change its colour, or set it to come on at dusk. If you are curious about smart lighting, start with one of these rather than a whole kit.",
@@ -709,8 +686,8 @@ export const products: Product[] = [
     oldPrice: 32,
     addedAt: "2026-02-14",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/smart-home/brisk-socket-mini.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "Makes any ordinary appliance switchable from your phone.",
     description:
       "A lamp, a fan, a Christmas tree — anything with a plug becomes something you can schedule. It is small enough not to block the second socket, which most of these are not. It also reports how much power the thing plugged into it is drawing.",
@@ -732,8 +709,8 @@ export const products: Product[] = [
     price: 39,
     addedAt: "2025-12-16",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/smart-home/ferrite-sense.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "Notices movement and tells the rest of your setup about it.",
     description:
       "Stick it in a hallway and your lights come on when you walk through, and go off when you do not. It runs for about two years on the battery it ships with. On its own it does nothing; it is useful once you have a bulb or a plug for it to trigger.",
@@ -756,8 +733,8 @@ export const products: Product[] = [
     oldPrice: 209,
     addedAt: "2026-05-08",
     bestseller: true,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/smart-home/halden-dial.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "A heating control you can actually work out how to use.",
     description:
       "One dial, one screen, and a schedule you set by turning it rather than by reading a manual. It learns roughly when you are in and stops heating an empty house. Fitting takes about twenty minutes if your boiler is a normal one.",
@@ -779,8 +756,8 @@ export const products: Product[] = [
     price: 129,
     addedAt: "2026-07-16",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/smart-home/orla-chime.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "See who is at the door before you decide to open it.",
     description:
       "A camera and a speaker in a doorbell, so you can answer from the kitchen or from another country. Footage is kept on the doorbell itself rather than on someone else's computer, which means no monthly fee and nothing to cancel later.",
@@ -802,8 +779,8 @@ export const products: Product[] = [
     price: 89,
     addedAt: "2026-06-05",
     bestseller: false,
-    image: PLACEHOLDER_IMAGE,
-    imageCredit: null,
+    image: "/img/smart-home/cairn-hub-one.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "The box that lets the battery-powered gadgets talk to your wi-fi.",
     description:
       "Sensors and buttons that run for years on a coin cell cannot use wi-fi — it drains them. They use a low-power radio instead, and this is the translator. Buy one if you are adding sensors; skip it if you only want bulbs and plugs.",
@@ -828,13 +805,8 @@ export const products: Product[] = [
     price: 15,
     addedAt: "2026-03-28",
     bestseller: false,
-    image: "/img/accessories/ferrite-cord-2m.jpg",
-    imageCredit: {
-      kind: "photograph",
-      photographer: "ready made",
-      source: "Pexels",
-      url: "https://www.pexels.com/photo/close-up-photo-of-cord-3921633/",
-    },
+    image: "/img/accessories/ferrite-cord-2m.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "A charging cable that outlasts the thing you bought it for.",
     description:
       "Braided sleeve, moulded strain relief at both ends, and a two-metre length that reaches the sofa. Cables fail where they bend, so that is where this one is reinforced. It carries full charging speed and video, so it also drives a monitor.",
@@ -857,13 +829,8 @@ export const products: Product[] = [
     oldPrice: 55,
     addedAt: "2026-01-30",
     bestseller: true,
-    image: "/img/accessories/ferrite-brick-65.jpg",
-    imageCredit: {
-      kind: "photograph",
-      photographer: "I'm Zion",
-      source: "Pexels",
-      url: "https://www.pexels.com/photo/gallium-nitride-chargers-over-blue-surface-4865059/",
-    },
+    image: "/img/accessories/ferrite-brick-65.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "One charger for the laptop, the phone and the headphones.",
     description:
       "Two sockets, enough power for a laptop, and pins that fold flat so it does not tear the lining of your bag. Plug two things in and it divides the power sensibly between them. This is the one to buy if you are tired of carrying three chargers.",
@@ -885,13 +852,8 @@ export const products: Product[] = [
     price: 59,
     addedAt: "2025-11-06",
     bestseller: false,
-    image: "/img/accessories/vellum-rise.jpg",
-    imageCredit: {
-      kind: "photograph",
-      photographer: "Workperch",
-      source: "Unsplash",
-      url: "https://unsplash.com/photos/black-and-silver-laptop-computer-on-brown-wooden-table-iTUZ7VcJI8M",
-    },
+    image: "/img/accessories/vellum-rise.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "Lifts the screen to eye level, which your neck will notice within a week.",
     description:
       "A laptop on a desk puts the screen too low, and you lean forward all day to compensate. This raises it by about fifteen centimetres. You will need a separate keyboard once the laptop is up there — that is how it is supposed to work.",
@@ -914,13 +876,8 @@ export const products: Product[] = [
     oldPrice: 85,
     addedAt: "2026-04-24",
     bestseller: false,
-    image: "/img/accessories/kestrel-glide.jpg",
-    imageCredit: {
-      kind: "photograph",
-      photographer: "Andrey Matveev",
-      source: "Pexels",
-      url: "https://www.pexels.com/photo/sleek-white-wireless-mouse-on-vibrant-yellow-32995421/",
-    },
+    image: "/img/accessories/kestrel-glide.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "Quiet, accurate, and shaped for a hand rather than a photograph.",
     description:
       "The buttons are pressure-damped, so a whole afternoon of clicking does not annoy the room. It connects to three machines at once and switches between them with a button underneath. Battery life is measured in months, not days.",
@@ -942,13 +899,8 @@ export const products: Product[] = [
     price: 119,
     addedAt: "2026-06-18",
     bestseller: true,
-    image: "/img/accessories/halden-press.jpg",
-    imageCredit: {
-      kind: "photograph",
-      photographer: "Clay Banks",
-      source: "Unsplash",
-      url: "https://unsplash.com/photos/silver-and-white-computer-keyboard-PXaQXThG1FY",
-    },
+    image: "/img/accessories/halden-press.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "A keyboard that is pleasant to type on and quiet enough for an office.",
     description:
       "Low-profile keys with a short, definite press, and no rattle. It is a compact layout, so the number pad is gone and your mouse hand sits closer in. Pairs with three devices, and runs for a couple of months between charges.",
@@ -970,13 +922,8 @@ export const products: Product[] = [
     price: 49,
     addedAt: "2026-07-20",
     bestseller: false,
-    image: "/img/accessories/sable-carry-14.jpg",
-    imageCredit: {
-      kind: "photograph",
-      photographer: "Lee Campbell",
-      source: "Pexels",
-      url: "https://www.pexels.com/photo/closed-grey-leather-case-89723/",
-    },
+    image: "/img/accessories/sable-carry-14.png",
+    imageCredit: { kind: "generated", model: "nano-banana-2" },
     shortDescription: "A sleeve thick enough to matter when the bag goes down hard.",
     description:
       "Most sleeves are a thin layer of felt that stops scratches and nothing else. This one has a padded core, so a laptop inside it survives a bag being dropped. There is a flat pocket on the back for a charger and a cable.",

@@ -1,10 +1,16 @@
 # Product imagery
 
-Audio and accessories ship **photographs**. The other four categories still
-show the shared placeholder.
+All 36 products ship **generated images** — one model, `nano-banana-2`, one
+prompt template, only the description varying. No photographs and no
+illustrations are referenced by `lib/products.ts` any more.
 
 A parallel system of flat SVG illustrations is kept in the repository as a
 working fallback — see [Illustration fallback](#illustration-fallback) below.
+The drawings themselves were deleted when the generated set replaced them;
+`npm run art` recreates them.
+
+**Do not reintroduce stock photography.** It was tried three times and the
+sections below record why each attempt ended.
 
 ## How we got here
 
@@ -23,8 +29,24 @@ beautifully at card size but read sparse at the 509px the product page uses —
 a flat silhouette has no detail to give when it is enlarged.
 
 **Third attempt: photographs with the brand-mark rule dropped.** Immediately
-workable: ten candidates inspected, six usable, none rejected for a logo. That
-is what ships.
+workable: ten candidates inspected, six usable, none rejected for a logo. But
+six sources meant six backdrops, which the next section is about.
+
+**Fourth attempt: unify those backdrops in code.** Measured, failed, abandoned
+— see below. It cannot be made to work.
+
+**Fifth attempt: generate all 36 from one model.** What ships. The problem was
+never the individual picture; it was that many sources give many backgrounds,
+and nothing applied afterwards reconciles a decision made at the source. One
+model and one template fix it before it happens.
+
+The shipping frames were generated **interactively**, not by a script, so no
+seed came back and no frame can be reproduced exactly. `imageCredit` records
+the model and omits the seed deliberately: a number that does not reproduce
+the image is worse than no number. `scripts/place-images.ts` maps a folder of
+timestamped output onto slugs, and prints the mapping before it copies —
+because the only thing tying a file to a product is the order it was made in,
+and that order has already been wrong once.
 
 ## Why the backgrounds are not unified
 
@@ -323,18 +345,14 @@ strokes merges elements that should stay separate.
 
 ## Remaining work
 
-| Category | Shipping | Illustration fallback |
-| --- | --- | --- |
-| audio | 6 photographs | 6 drawn |
-| accessories | 6 photographs | — |
-| laptops | placeholder | — |
-| phones | placeholder | — |
-| tvs | placeholder | — |
-| smart-home | placeholder | — |
+None. All six categories carry a full set of six generated frames, and no
+product is left on `/img/placeholder.svg`. The placeholder file and the
+`PLACEHOLDER_IMAGE` constant stay for any product added later.
 
-The remaining twenty-four images are **not tied to a stage**. All ten stages are
-finished and the site is live; collecting them is ongoing work that runs after
-launch, one category at a time.
+If a frame ever needs replacing, regenerate it from the description in
+`DESCRIPTIONS` and drop it in as `public/img/<category>/<slug>.png`. It will
+not match its neighbours' seed — none of them have one — but it will match
+their lighting and backdrop, which is the part that shows.
 
 This file used to say they were sourced in stage 9. That was wrong twice over:
 the stage list in `AGENTS.md` never put imagery in stage 9 — that stage was

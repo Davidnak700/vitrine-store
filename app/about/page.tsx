@@ -63,9 +63,10 @@ export default function AboutPage() {
           ever holds imaginary things.
         </p>
         <p className="mt-4 text-body text-ink-muted">
-          The product photographs are real, though, and were taken by
-          photographers who published them under free licences. Each product
-          page credits its own.
+          The product pictures are not photographs either. Every one of them was
+          generated, from a single model and a single prompt, because a
+          photograph of a product that does not exist is a contradiction we
+          spent a long time failing to resolve.
         </p>
         <p className="mt-8">
           <Link

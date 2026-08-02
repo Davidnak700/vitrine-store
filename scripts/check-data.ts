@@ -79,16 +79,19 @@ check(
   products.every(
     (p) =>
       p.image === PLACEHOLDER_IMAGE ||
-      p.image === `/img/${p.category}/${p.slug}.jpg` ||
-      p.image === `/img/${p.category}/${p.slug}.svg`,
+      p.image === `/img/${p.category}/${p.slug}.png`,
   ),
+);
+check(
+  "every product has its own image, none left on the placeholder",
+  products.every((p) => p.image !== PLACEHOLDER_IMAGE),
 );
 // Two kinds of credit, checked separately. A missing credit and a credit
 // missing its own fields are different faults, and reporting them as one line
 // would say "imagery is wrong" without saying which picture or what about it.
 check(
-  "every raster image carries a credit of some kind",
-  products.every((p) => !p.image.endsWith(".jpg") || p.imageCredit !== null),
+  "every image carries a credit of some kind",
+  products.every((p) => p.image === PLACEHOLDER_IMAGE || p.imageCredit !== null),
 );
 check(
   "photograph credits name a photographer, a licensed source and a page",
@@ -100,17 +103,23 @@ check(
         (p.imageCredit.source === "Unsplash" || p.imageCredit.source === "Pexels")),
   ),
 );
+// A seed is not required. The shipping set was generated interactively, which
+// returns none, and a seed is only worth demanding when a script could submit
+// the same job again. Where one is present it still has to be a real integer,
+// so a half-filled credit cannot slip through.
 check(
-  "generated credits name a model and a seed",
+  "generated credits name a model, and any seed given is an integer",
   products.every(
     (p) =>
       p.imageCredit?.kind !== "generated" ||
-      (!!p.imageCredit.model && Number.isInteger(p.imageCredit.seed)),
+      (!!p.imageCredit.model &&
+        (p.imageCredit.seed === undefined ||
+          Number.isInteger(p.imageCredit.seed))),
   ),
 );
 check(
   "nothing without its own image claims a credit",
-  products.every((p) => p.image.endsWith(".jpg") || p.imageCredit === null),
+  products.every((p) => p.image !== PLACEHOLDER_IMAGE || p.imageCredit === null),
 );
 
 // ------------------------------------------------------- home page, 3 rows

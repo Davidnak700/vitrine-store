@@ -29,6 +29,7 @@ npm run dev
 | `npm run build` | Production build |
 | `npm run lint` | ESLint |
 | `npm run check:data` | Validates the catalogue against the rules below |
+| `npm run images:place` | Maps generated frames onto product slugs — dry run unless given `-- --go` |
 | `npm run images:prepare` | Crops source photographs to the 4:3 storefront frame |
 | `npm run art` | Regenerates the SVG illustration fallback |
 | `npm run check:art` | Measures those illustrations |
@@ -144,15 +145,37 @@ feathered edges, reflections — and a threshold needs a step to stop on. There
 is none. Tightening it does not separate them, it starts tearing holes in the
 background instead.
 
-Doing it properly needs model-grade segmentation or hand-cut masks. What ships
-instead is a tight crop, so less of each backdrop is on screen.
+Doing it properly needs model-grade segmentation or hand-cut masks. That ended
+the attempt to make stock photography behave.
 
-The illustrations and their generator stay in the repository as a documented
-fallback. `docs/image-spec.md` has the full record, including what not to
-retry.
+**Attempt five — generate all thirty-six from one model.** Which is what ships.
 
-Photographs come from Unsplash and Pexels under their free licences, credited
-per product in `imageCredit`.
+Every frame comes from one model, `nano-banana-2`, through one prompt template
+where only the product description varies. Everything else — lighting,
+backdrop, framing, the exclusions — is held constant, and that is the thing
+none of the previous four attempts managed: a catalogue that looks like one
+shop rather than thirty-six salvage operations. The problem was never the
+individual picture. It was that twelve sources give twelve backgrounds, and no
+amount of processing afterwards fixes a decision made at the source.
+
+The descriptions do the work the prompt cannot. Two habits throughout, both
+aimed at what these models get wrong: say how many of a thing there are, and
+prefer plain surfaces to grilles, ports and legends wherever the product
+allows it. Naming what must *not* appear backfires — "no socket" kept the word
+in the prompt and produced socket holes anyway. Within a category the
+silhouettes are assigned before any description is written, so six laptops do
+not come back as one laptop photographed six times.
+
+**These frames cannot be reproduced exactly.** They were generated
+interactively in a chat client rather than by a script, so no seed came back.
+`imageCredit` records the model and no seed, because recording a seed that
+does not reproduce the image would be worse than recording none. Regenerating
+would give a different, equally valid set.
+
+`docs/image-spec.md` has the full record, including what not to retry. The SVG
+illustration generator stays in the repository as a documented fallback; the
+drawings themselves were deleted when the generated frames replaced them, and
+`npm run art` recreates them.
 
 ## What a phone audit found
 
@@ -248,7 +271,7 @@ components/   UI, four of which are client components
 lib/          data, types and pure logic
 scripts/      catalogue validation, image preparation, illustration generator
 docs/         image-spec.md — imagery decisions and what has been ruled out
-assets/       untouched photograph originals
+assets/       image originals, untouched, as they came out of the generator
 ```
 
 `AGENTS.md` holds the working brief: the rules the code is written against,
@@ -256,5 +279,6 @@ and the reasoning behind the ones that changed.
 
 ## Licence
 
-Code is free to read and learn from. Photographs belong to their photographers
-under the Unsplash and Pexels licences.
+Code is free to read and learn from. The product images are generated, and
+Higgsfield's terms neither claim ownership of outputs nor restrict their
+commercial use.
